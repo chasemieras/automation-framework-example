@@ -1,5 +1,5 @@
 {
-  "BrowserType": "Chrome",
+  "DriverType": "Chrome",
   "EnvironmentType": "Local",
   "ScreenSize": "Desktop",
   "DefaultElementTimeout": 10,

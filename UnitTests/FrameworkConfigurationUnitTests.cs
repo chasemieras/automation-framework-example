@@ -48,7 +48,7 @@ namespace UnitTests
         [Fact]
         public void TestThatNoEnvVarFails()
         {
-            Assert.Throws<FrameworkConfigurationException>(() => ClearConfig("").BrowserType);
+            Assert.Throws<FrameworkConfigurationException>(() => ClearConfig("").DriverType);
         }
 
         [Fact]

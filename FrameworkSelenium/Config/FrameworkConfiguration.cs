@@ -50,7 +50,7 @@ namespace FrameworkSelenium.Config
                 throw;
             }
 
-            BrowserType = config.BrowserType;
+            DriverType = config.DriverType;
             EnvironmentType = config.EnvironmentType;
             DefaultElementTimeout = TimeSpan.FromSeconds(config.DefaultElementTimeout);
             DefaultPageTimeout = TimeSpan.FromSeconds(config.DefaultPageTimeout);
@@ -64,7 +64,7 @@ namespace FrameworkSelenium.Config
             TabletWidth = config.TabletWidth;
         }
 
-        public BrowserType BrowserType { get; set; }
+        public DriverType DriverType { get; set; }
         public EnvironmentType EnvironmentType { get; set; }
         public TimeSpan DefaultElementTimeout { get; set; }
         public TimeSpan DefaultPageTimeout{ get; set; }

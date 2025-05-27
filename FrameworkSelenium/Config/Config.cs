@@ -4,7 +4,7 @@ namespace FrameworkSelenium.Config
 {
     public class Config
     {
-        public BrowserType BrowserType { get; set; }
+        public DriverType DriverType { get; set; }
         public EnvironmentType EnvironmentType { get; set; }
 
         public int DesktopHeight { get; set; }

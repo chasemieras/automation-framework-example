@@ -1,10 +1,10 @@
 ﻿namespace FrameworkSelenium.Enums
 {
-    public enum BrowserType
+    public enum DriverType
     {
         Chrome,
         Edge,
-        Firefox,
-        All
+        Firefox
+        //All
     }
 }

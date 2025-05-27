@@ -4,12 +4,7 @@ using FrameworkSelenium.Exceptions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace FrameworkSelenium.Selenium.Drivers
 {
@@ -49,9 +44,7 @@ namespace FrameworkSelenium.Selenium.Drivers
         {
             lock (_lock)
             {
-                IWebDriver _driver = _driverThreadLocal.Value;
-
-                if (_driver == null)
+                if (_driverThreadLocal.Value == null)
                 {
                     InterfaceDriver driver;
                     DriverOptions options;
@@ -75,11 +68,10 @@ namespace FrameworkSelenium.Selenium.Drivers
                             throw new FrameworkException($"Driver type '{driverType}' not supported");
                     }
 
-                    _driver = driver.GenerateWebDriver(options);
-                    _driver = _driverThreadLocal.Value;
+                    _driverThreadLocal.Value = driver.GenerateWebDriver(options);
                 }
 
-                return _driver;
+                return _driverThreadLocal.Value;
             }
         }
 
@@ -87,10 +79,9 @@ namespace FrameworkSelenium.Selenium.Drivers
         {
             lock (_lock) 
             {
-                IWebDriver _driver = _driverThreadLocal.Value;
-                if (_driver == null) return;
+                if (_driverThreadLocal.Value == null) return;
 
-                _driver.Quit();
+                _driverThreadLocal.Value.Quit();
                 _driverThreadLocal.Value = null;
             }
         }

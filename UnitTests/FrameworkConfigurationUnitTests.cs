@@ -35,7 +35,7 @@ namespace UnitTests
         public void TestThatEnvVarPasses()
         {
             string basePath = AppContext.BaseDirectory;
-            string path = Path.Combine(basePath, @"..\..\..\config.json");
+            string path = Path.Combine(basePath, @"..\..\..\Json\config.json");
             string fullPath = Path.GetFullPath(path);
             Environment.SetEnvironmentVariable("FRAMEWORK_CONFIG", fullPath);
             ClearConfig(fullPath).Should().NotBeNull();
@@ -61,7 +61,7 @@ namespace UnitTests
         public void TestThatBadJsonFails()
         {
             string basePath = AppContext.BaseDirectory;
-            string path = Path.Combine(basePath, @"..\..\..\bad.json");
+            string path = Path.Combine(basePath, @"..\..\..\Json\bad.json");
             string fullPath = Path.GetFullPath(path);
             Assert.Throws<JsonException>(() => ClearConfig(fullPath));
         }
@@ -70,7 +70,7 @@ namespace UnitTests
         public void TestThatBadConfigFails()
         {
             string basePath = AppContext.BaseDirectory;
-            string path = Path.Combine(basePath, @"..\..\..\badConfig.json");
+            string path = Path.Combine(basePath, @"..\..\..\Json\badConfig.json");
             string fullPath = Path.GetFullPath(path);
             Assert.Throws<JsonException>(() => ClearConfig(fullPath));
         }

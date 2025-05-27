@@ -28,21 +28,10 @@ namespace FrameworkSelenium.Config
 
         private FrameworkConfiguration()
         {
-            //driver type
-            //environment type
-
-            //tablet sizing
-            //mobile sizing
-
-            //timeout for elements
-            //timeout for pages
-
-            //headless mode
-
             JsonSerializerOptions options = new()
             {
                 PropertyNameCaseInsensitive = true,
-                Converters = { new JsonStringEnumConverter() }  // Enables string <-> enum mapping
+                Converters = { new JsonStringEnumConverter() }
             };
 
             const string envVarName = "FRAMEWORK_CONFIG";
@@ -61,9 +50,32 @@ namespace FrameworkSelenium.Config
                 throw;
             }
 
+            BrowserType = config.BrowserType;
+            EnvironmentType = config.EnvironmentType;
+            DefaultElementTimeout = TimeSpan.FromSeconds(config.DefaultElementTimeout);
+            DefaultPageTimeout = TimeSpan.FromSeconds(config.DefaultPageTimeout);
+            HeadlessMode = false;
+
+            DesktopHeight = config.DesktopHeight;
+            DesktopWidth = config.DesktopWidth;
+            MobileHeight = config.MobileHeight;
+            MobileWidth = config.MobileWidth;
+            TabletHeight = config.TabletHeight;
+            TabletWidth = config.TabletWidth;
         }
 
         public BrowserType BrowserType { get; set; }
+        public EnvironmentType EnvironmentType { get; set; }
+        public TimeSpan DefaultElementTimeout { get; set; }
+        public TimeSpan DefaultPageTimeout{ get; set; }
+        public ScreenSize ScreenSize { get; set; }
+        public bool HeadlessMode { get; set; }
 
+        public int DesktopHeight { get; }
+        public int DesktopWidth { get; }
+        public int MobileHeight { get; }
+        public int MobileWidth { get; }
+        public int TabletHeight { get; }
+        public int TabletWidth { get; }
     }
 }

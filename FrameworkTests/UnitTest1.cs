@@ -1,4 +1,4 @@
-namespace framework_testing
+namespace FrameworkTests
 {
     public class UnitTest1
     {

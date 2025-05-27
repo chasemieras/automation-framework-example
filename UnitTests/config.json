@@ -1,0 +1,16 @@
+{
+  "BrowserType": "Chrome",
+  "EnvironmentType": "Local",
+
+  "DesktopHeight": 715,
+  "DesktopWidth": 1440,
+
+  "MobileHeight": 490,
+  "MobileWidth": 450,
+
+  "TabletHeight": 1400,
+  "TabletWidth": 1024,
+
+  "DefaultElementTimeout": 10,
+  "DefaultPageTimeout": 30
+}

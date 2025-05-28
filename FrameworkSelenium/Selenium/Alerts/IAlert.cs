@@ -1,8 +1,4 @@
-using FrameworkSelenium.Selenium.Elements;
-using FrameworkSelenium.Selenium.Locator;
-using System.Collections.Generic;
-
-namespace FrameworkSelenium.Selenium.Browser
+namespace FrameworkSelenium.Selenium.Alerts
 {
     public interface IAlert
     {

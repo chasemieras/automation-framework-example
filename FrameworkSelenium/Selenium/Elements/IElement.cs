@@ -1,9 +1,4 @@
-﻿using FrameworkSelenium.Selenium.Locator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace FrameworkSelenium.Selenium.Elements
 {
@@ -14,12 +9,12 @@ namespace FrameworkSelenium.Selenium.Elements
 
         bool IsDisplayed { get; }
         bool IsEnabled { get; }
+        bool IsInteractable { get; }
         bool IsSelected { get; }
         string TagName { get; }
         Point Location { get; }
         string CssValue { get; }
         string Text { get; }
-
 
         #endregion
 
@@ -40,6 +35,7 @@ namespace FrameworkSelenium.Selenium.Elements
         string Alt { get; }
 
         #endregion
+        
         void Click();
         void SendKeys(string text);
         void Clear();
@@ -48,8 +44,10 @@ namespace FrameworkSelenium.Selenium.Elements
         
         void ExtractText();
 
+        public string GetPseudoelement();
+
         //todo add HTTP checker for link
-        
-        
+        //attrubte exists & atrribute exists and not empty
+
     }
 }

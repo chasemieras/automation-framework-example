@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace FrameworkSelenium.Selenium.Drivers
+namespace FrameworkSelenium.Selenium.WebDrivers
 {
     public class Chrome : InterfaceDriver
     {

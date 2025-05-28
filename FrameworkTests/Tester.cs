@@ -1,6 +1,5 @@
 using FrameworkSelenium.Config;
-using FrameworkSelenium.Enums;
-using FrameworkSelenium.Selenium.Browser;
+using FrameworkSelenium.Selenium.Browsers;
 using Xunit.Abstractions;
 
 namespace FrameworkTests

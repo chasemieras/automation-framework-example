@@ -1,9 +1,8 @@
 ﻿using FrameworkSelenium.Selenium.Elements;
-using FrameworkSelenium.Selenium.Locator;
 using OpenQA.Selenium;
 using System;
 
-namespace FrameworkSelenium.Selenium.Wait
+namespace FrameworkSelenium.Selenium.Waits
 {
     public interface IWait
     {

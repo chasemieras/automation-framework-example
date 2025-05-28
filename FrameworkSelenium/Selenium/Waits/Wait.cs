@@ -1,33 +1,25 @@
-﻿using FrameworkSelenium.Selenium.Browser;
+﻿using FrameworkSelenium.Selenium.Browsers;
 using FrameworkSelenium.Selenium.Elements;
-using FrameworkSelenium.Selenium.Locator;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Threading;
 
-namespace FrameworkSelenium.Selenium.Wait
+namespace FrameworkSelenium.Selenium.Waits
 {
-    public class Wait : IWait
+    public class Wait(TimeSpan? defaultTimeout = null) : IWait
     {
-        private readonly Func<Action, TimeSpan, Exception?> _retry;
-        private readonly TimeSpan _defaultTimeout;
-
-        public Wait(TimeSpan? defaultTimeout = null)
-        {
-            _defaultTimeout = defaultTimeout ?? TimeSpan.FromSeconds(10);
-        }
+        private readonly Func<Action, TimeSpan, Exception> _retry;
+        private readonly TimeSpan _defaultTimeout = defaultTimeout ?? TimeSpan.FromSeconds(10);
 
         public IElement UntilElementExists(IBrowser context, ILocator locator, TimeSpan? timeout = null)
         {
-            var end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
-            Exception? lastError = null;
+            DateTime end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
+            Exception lastError = null;
 
             while (DateTime.UtcNow < end)
             {
                 try
                 {
-                    var element = context.GetElement(locator);
+                    IElement element = context.GetElement(locator);
                     if (element != null)
                         return element;
                 }
@@ -44,14 +36,14 @@ namespace FrameworkSelenium.Selenium.Wait
 
         public IElement UntilElementExists(IElement context, ILocator locator, TimeSpan? timeout = null)
         {
-            var end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
-            Exception? lastError = null;
+            DateTime end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
+            Exception lastError = null;
 
             while (DateTime.UtcNow < end)
             {
                 try
                 {
-                    var element = context.GetElement(locator);
+                    IElement element = context.GetElement(locator);
                     if (element != null)
                         return element;
                 }
@@ -68,7 +60,7 @@ namespace FrameworkSelenium.Selenium.Wait
 
         public bool Until(IBrowser context, Func<IBrowser, bool> condition, TimeSpan? timeout = null)
         {
-            var end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
+            DateTime end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
             while (DateTime.UtcNow < end)
             {
                 if (condition(context))
@@ -82,7 +74,7 @@ namespace FrameworkSelenium.Selenium.Wait
 
         public bool Until(IElement context, Func<IElement, bool> condition, TimeSpan? timeout = null)
         {
-            var end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
+            DateTime end = DateTime.UtcNow + (timeout ?? _defaultTimeout);
             while (DateTime.UtcNow < end)
             {
                 if (condition(context))

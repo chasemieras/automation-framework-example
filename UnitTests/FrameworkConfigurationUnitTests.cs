@@ -7,16 +7,11 @@ using Xunit.Abstractions;
 
 namespace UnitTests
 {
-    public class FrameworkConfigurationUnitTests
+    public class FrameworkConfigurationUnitTests(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
+        private readonly ITestOutputHelper _output = output;
 
-        public FrameworkConfigurationUnitTests(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
-        private FrameworkConfiguration ClearConfig(string path)
+        private static FrameworkConfiguration ClearConfig(string path)
         {
             Type configType = typeof(FrameworkConfiguration);
             FieldInfo? threadLocalField = configType.GetField("_config", BindingFlags.Static | BindingFlags.NonPublic);

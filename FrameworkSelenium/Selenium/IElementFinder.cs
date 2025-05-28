@@ -1,22 +1,42 @@
-using FrameworkSelenium.Selenium.Locator;
-using System;
+using FrameworkSelenium.Selenium.Elements;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FrameworkSelenium.Selenium.Elements
+namespace FrameworkSelenium.Selenium
 {
+    /// <summary>
+    /// An interface for the methods for classes that interact with elements
+    /// </summary>
     public interface IElementFinder
     {
-
+        /// <summary>
+        /// Gets the WebElement based on the <see cref="Locators.Locator"/>
+        /// </summary>
+        /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
+        /// <returns>An <see cref="IElement"/></returns>
         IElement GetElement(ILocator locator);
-        
+
+        /// <summary>
+        /// Gets WebElements based on the <see cref="Locators.Locator"/>
+        /// </summary>
+        /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
+        /// <returns>A <see cref="List{T}"/> of <see cref="IElement"/>s</returns>
         List<IElement> GetElements(ILocator locator);
 
-        bool ElementExist(ILocator locator);
+        /// <summary>
+        /// Checks if the given <see cref="Locators.Locator"/> find a WebElement
+        /// </summary>
+        /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
+        /// <param name="checkIfInteractable">Set to false to not check if the element is interactable</param>
+        /// <returns><b>True</b>: the element does exist | <b>False</b>: the element does not exist </returns>
+        bool ElementExist(ILocator locator, bool checkIfInteractable);
 
-        bool ElementsExist(ILocator locator);
+        /// <summary>
+        /// Checks if the given <see cref="Locators.Locator"/> find a list WebElements
+        /// </summary>
+        /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
+        /// <param name="checkIfInteractable">Set to false to not check if the element is interactable</param>
+        /// <returns><b>True</b>: the elements do exist | <b>False</b>: the elements do not exist </returns>
+        bool ElementsExist(ILocator locator, bool checkIfInteractable);
 
     }
 }

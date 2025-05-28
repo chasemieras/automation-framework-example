@@ -3,12 +3,6 @@ using OpenQA.Selenium;
 
 namespace FrameworkSelenium.Selenium.Locator
 {
-    public interface ILocator
-    {
-        By ToBy();
-        LocatorType Type { get; }
-    }
-
     public class Locator : ILocator
     {
         private readonly By _by;

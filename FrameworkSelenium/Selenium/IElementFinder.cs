@@ -9,9 +9,9 @@ namespace FrameworkSelenium.Selenium.Elements
 {
     public interface IElementFinder
     {
-        #region Element Gathering
 
         IElement GetElement(ILocator locator);
+        
         List<IElement> GetElements(ILocator locator);
 
         bool ElementExist(ILocator locator);

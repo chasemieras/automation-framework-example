@@ -32,4 +32,6 @@ namespace FrameworkSelenium.Selenium.Locator
         public static Locator LinkText(string text) => new Locator(By.LinkText(text), LocatorType.LinkText);
         public static Locator PartialLinkText(string text) => new Locator(By.PartialLinkText(text), LocatorType.PartialLinkText);
     }
+//todo add relative locators
+
 }

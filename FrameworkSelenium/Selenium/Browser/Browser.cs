@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace FrameworkSelenium.Selenium.Browser
 {
-    public class Browser : IBrowser
+    public class Browser : IBrowser, IDisposable
     {
 
         private readonly IWebDriver _driver;

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using FrameworkSelenium.Selenium.Elements;
+using FrameworkSelenium.Selenium.Locator;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrameworkSelenium.Selenium.Browser
 {
-    public interface IBrowser : IDisposable
+    public interface IBrowser
     {
-
+        void Navigate(string url);
+        IElement GetElement(ILocator locator);
+        List<IElement> GetElements(ILocator locator);
+        void Quit();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace FrameworkSelenium.Selenium.Elements
 {
@@ -8,33 +9,129 @@ namespace FrameworkSelenium.Selenium.Elements
         private readonly IWebElement _element = element;
         private readonly IWebDriver _driver = driver;
 
-        public IElement GetElement(ILocator locator)
-            => new Element(_element.FindElement(locator.ToBy), _driver);
+		//todo look for NotImplementedException and implement them!
 
-        public List<IElement> GetElements(ILocator locator)
+		public bool IsDisplayed => throw new System.NotImplementedException();
+
+        public bool IsEnabled => throw new System.NotImplementedException();
+
+        public bool IsInteractable => throw new System.NotImplementedException();
+
+        public bool IsSelected => throw new System.NotImplementedException();
+
+        public Point Location => throw new System.NotImplementedException();
+
+        public string Src => throw new System.NotImplementedException();
+
+        public string Href => throw new System.NotImplementedException();
+
+        public string Value => throw new System.NotImplementedException();
+
+        public string ClassName => throw new System.NotImplementedException();
+
+        public string Id => throw new System.NotImplementedException();
+
+        public string Name => throw new System.NotImplementedException();
+
+        public string Title => throw new System.NotImplementedException();
+
+        public string InnerHtml => throw new System.NotImplementedException();
+
+        public string OuterHtml => throw new System.NotImplementedException();
+
+        public string Target => throw new System.NotImplementedException();
+
+        public string Style => throw new System.NotImplementedException();
+
+        public string AltText => throw new System.NotImplementedException();
+
+        public string TagName => throw new System.NotImplementedException();
+
+        public string Class => throw new System.NotImplementedException();
+
+        public string Rel => throw new System.NotImplementedException();
+
+        public bool Checked => throw new System.NotImplementedException();
+
+        public string Styling => throw new System.NotImplementedException();
+
+        public string Text => throw new System.NotImplementedException();
+
+        public string ExtractString => throw new System.NotImplementedException();
+
+        public bool AttributeExists(string attribute, bool checkIfEmpty = true)
         {
-            System.Collections.ObjectModel.ReadOnlyCollection<IWebElement> elements = _element.FindElements(locator.ToBy);
-            List<IElement> list = new List<IElement>();
-            foreach (IWebElement elem in elements)
-                list.Add(new Element(elem, _driver));
-            return list;
+            throw new System.NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Click()
         {
-            _element.Click();
+            throw new System.NotImplementedException();
+        }
+
+        public bool ElementExist(ILocator locator, bool checkIfInteractable)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ElementsExist(ILocator locator, bool checkIfInteractable)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ExtractText()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetAttribute(string attribute)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IElement GetElement(ILocator locator)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<IElement> GetElements(ILocator locator)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetPseudoelement()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void RightClick()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ScrollToElement()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SendEnter()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void SendKeys(string text)
         {
-            _element.SendKeys(text);
+            throw new System.NotImplementedException();
         }
 
-        public string Text => _element.Text;
-
-        public string GetAttribute(string attribute)
+        public void Submit()
         {
-            return _element.GetAttribute(attribute);
+            throw new System.NotImplementedException();
         }
     }
 }

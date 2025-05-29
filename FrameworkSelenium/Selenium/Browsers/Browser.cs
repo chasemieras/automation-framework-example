@@ -24,6 +24,9 @@ namespace FrameworkSelenium.Selenium.Browsers
         private readonly IWebDriver _driver;
         private readonly DriverType _driverType;
 
+        /// <summary>
+        /// Creates a <see cref="IBrowser"/>, which spins up a <see cref="IWebDriver"/> instance
+        /// </summary>
         public Browser() 
         {
             Environment.SetEnvironmentVariable("SE_AVOID_STATS", "true");
@@ -166,6 +169,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <inheritdoc />
         public Size WindowSize => _driver.Manage().Window.Size;
 
+        /// <inheritdoc />
         public string DriverType => throw new NotImplementedException();//todo
 
         /// <inheritdoc />
@@ -232,6 +236,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <inheritdoc />
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             Dispose();
         }
 

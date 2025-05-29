@@ -28,12 +28,6 @@ namespace FrameworkSelenium.Config
 
         private FrameworkConfiguration()
         {
-            JsonSerializerOptions options = new()
-            {
-                PropertyNameCaseInsensitive = true,
-                Converters = { new JsonStringEnumConverter() }
-            };
-
             const string envVarName = "FRAMEWORK_CONFIG";
             string pathToConfigJson = Environment.GetEnvironmentVariable(envVarName);
             if (string.IsNullOrEmpty(pathToConfigJson))
@@ -43,7 +37,7 @@ namespace FrameworkSelenium.Config
             try
             {
                 string jsonString = File.ReadAllTextAsync(pathToConfigJson).GetAwaiter().GetResult();
-                config = JsonSerializer.Deserialize<Config>(jsonString, options);
+                config = JsonSerializer.Deserialize<Config>(jsonString, JsonSettings.FrameworkConfigSettings);
             }
             catch
             {

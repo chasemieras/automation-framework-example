@@ -1,7 +1,7 @@
 namespace FrameworkSelenium.Selenium.Alerts
 {
     /// <summary>
-    /// Object to handle wrapping around <see cref="OpenQA.Selenium.IAlert">.
+    /// Object to handle wrapping around <see cref="OpenQA.Selenium.IAlert"/>.
     /// </summary>
     public class Alert(OpenQA.Selenium.IAlert alert) : IAlert
     {

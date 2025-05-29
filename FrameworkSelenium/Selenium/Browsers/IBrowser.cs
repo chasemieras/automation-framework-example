@@ -38,12 +38,25 @@ namespace FrameworkSelenium.Selenium.Browsers
 
         #region Navigation
 
+        /// <summary>
+        /// Takes the browser to the given URL
+        /// </summary>
+        /// <param name="url">the website you want to test</param>
         void Navigate(string url);
 
+        /// <summary>
+        /// Moves the page backwards from past interactions
+        /// </summary>
         void Back();
 
+        /// <summary>
+        /// Moves the page forward from past interactions
+        /// </summary>
         void Forward();
 
+        /// <summary>
+        /// Refreshes the browser
+        /// </summary>
         void Refresh();
 
         #endregion

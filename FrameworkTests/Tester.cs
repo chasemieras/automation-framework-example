@@ -4,17 +4,11 @@ using Xunit.Abstractions;
 
 namespace FrameworkTests
 {
-    public class Tester
+    public class Tester(ITestOutputHelper output)
     {
-        private IBrowser browser { get; set; }
+        private IBrowser Browser { get; set; }
 
-        private readonly ITestOutputHelper _output;
-
-        public Tester(ITestOutputHelper output)
-        {
-            _output = output;
-        }
-
+        private readonly ITestOutputHelper _output = output;
 
         [Fact]
         public void Test1()
@@ -25,8 +19,8 @@ namespace FrameworkTests
             Environment.SetEnvironmentVariable("FRAMEWORK_CONFIG", fullPath);
             
             _output.WriteLine($"{FrameworkConfiguration.Config.DriverType}\n{FrameworkConfiguration.Config.EnvironmentType}\n{FrameworkConfiguration.Config.DefaultElementTimeout}\n{FrameworkConfiguration.Config.DefaultPageTimeout}");
-            browser = new Browser();
-
+            Browser = new Browser();
+            _output.WriteLine($"{Browser.CurrentUrl}");
         }
     }
 }

@@ -1,5 +1,8 @@
 namespace FrameworkSelenium.Selenium.Alerts
 {
+    /// <summary>
+    /// Interface for <see cref="Alert"/>
+    /// </summary>
     public interface IAlert
     {
         /// <summary>

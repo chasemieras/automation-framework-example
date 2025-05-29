@@ -11,16 +11,22 @@ namespace FrameworkSelenium.Selenium.Elements
         bool IsEnabled { get; }
         bool IsInteractable { get; }
         bool IsSelected { get; }
-        string TagName { get; }
         Point Location { get; }
-        string CssValue { get; }
-        string Text { get; }
+
+        #endregion
+
+        #region Click Interactions
+
+        void Click();
+
+        void RightClick();
 
         #endregion
 
         #region Attributes
 
         string GetAttribute(string attribute);
+        bool AttributeExists(string attribute, bool checkIfEmpty = true);
         string Src {get;}
         string Href { get; }
         string Value { get; }
@@ -32,22 +38,38 @@ namespace FrameworkSelenium.Selenium.Elements
         string OuterHtml { get; }
         string Target { get; }
         string Style { get; }
-        string Alt { get; }
+        string AltText { get; }
+        string TagName { get; }
+        string Class { get; }
+        string Rel { get; }
+        bool Checked { get; }
+        string Styling { get; }
+
 
         #endregion
-        
-        void Click();
+
+        #region Text Interaction
+
+        string Text { get; }
+        string ExtractString { get; }
         void SendKeys(string text);
+        void SendEnter();
         void Clear();
         void Submit();
+
+        #endregion
+
+        #region Other Methods
+
         void ScrollToElement();
-        
+
         void ExtractText();
 
         public string GetPseudoelement();
 
-        //todo add HTTP checker for link
-        //attrubte exists & atrribute exists and not empty
+        #endregion
+
+        //todo add HTTP checker for link | Shadowroot | Select Element
 
     }
 }

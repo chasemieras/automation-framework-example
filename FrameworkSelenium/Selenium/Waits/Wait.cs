@@ -1,111 +1,142 @@
-﻿using FrameworkSelenium.Selenium.Browsers;
+﻿using FrameworkSelenium.Exceptions;
+using FrameworkSelenium.Selenium.Browsers;
 using FrameworkSelenium.Selenium.Elements;
+using OpenQA.Selenium;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace FrameworkSelenium.Selenium.Waits
 {
+    /// <summary>
+    /// Forces the code to gracefully stop and repeat easily
+    /// </summary>
     public class Wait : IWait
     {
-        private readonly Func<Action, TimeSpan, Exception?> _retry;
+        //todo think of other cool waits to add
+        //todo add the ability to ignore other exceptions?
+
         private readonly TimeSpan _defaultTimeout;
         private readonly int _defaultPollingInterval;
 
+        private readonly Type[] exceptionsToIgnore = [typeof(ForceWaitLoop), typeof(MoveTargetOutOfBoundsException),
+            typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException), typeof(ElementNotInteractableException)];
+
         public Wait(TimeSpan defaultTimeout = default, int defaultPollingInterval = default)
         {
-            _defaultTimeout = defaultTimeout ?? TimeSpan.FromSeconds(1);
-            _defaultPollingInterval = defaultPollingInterval ?? 500;
+            _defaultTimeout = defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout;
+            _defaultPollingInterval = defaultPollingInterval == 0 ? 500 : defaultPollingInterval;
         }
 
-        //todo think of other cool waits to add
-
-        public IElement UntilElementExists(IBrowser context, ILocator locator, 
-        TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public IElement UntilElementExists(IBrowser context, ILocator locator)
         {
-            var end = DateTime.Now + (timeout ?? _defaultTimeout);
-            Exception? lastError = null;
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            Exception lastError = null;
 
-            while (DateTime.Now < end)
+            while (DateTime.Now < endTime)
             {
                 try
                 {
-                    var element = context.FindElement(locator);
+                    IElement element = context.GetElement(locator);
                     if (element != null)
                         return element;
                 }
                 catch (Exception ex)
                 {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+
                     lastError = ex;
                 }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
-            throw new WaitTimeoutException($"Timed out waiting for element: {locator}", lastError);
+            throw new WaitTimeoutException(_defaultTimeout, lastError);
         }
 
-        public IElement UntilElementExists(IElement context, ILocator locator, 
-        TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public IElement UntilElementExists(IElement context, ILocator locator)
         {
-            var end = DateTime.Now + (timeout ?? _defaultTimeout);
-            Exception? lastError = null;
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            Exception lastError = null;
 
-            while (DateTime.Now < end)
+            while (DateTime.Now < endTime)
             {
                 try
                 {
-                    var element = context.FindElement(locator);
+                    IElement element = context.GetElement(locator);
                     if (element != null)
                         return element;
                 }
                 catch (Exception ex)
                 {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+
                     lastError = ex;
                 }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
-            throw new WaitTimeoutException($"Timed out waiting for nested element: {locator}", lastError);
+            throw new WaitTimeoutException(_defaultTimeout, lastError);
         }
 
-        public bool Until(IBrowser context, Func<IBrowser, bool> condition, 
-        TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public bool Until(IBrowser context, Func<IBrowser, bool> condition)
         {
-            var end = DateTime.Now + (timeout ?? _defaultTimeout);
-            while (DateTime.Now < end)
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            while (DateTime.Now < endTime)
             {
-                if (condition(context))
-                    return true;
+                try
+                {
+                    if (condition(context))
+                        return true;
+                }
+                catch (Exception ex)
+                {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+                }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
             return false;
         }
 
-        public bool Until(IElement context, Func<IElement, bool> condition, 
-        TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public bool Until(IElement context, Func<IElement, bool> condition)
         {
-            var end = DateTime.Now + (timeout ?? _defaultTimeout);
-            while (DateTime.Now < end)
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            while (DateTime.Now < endTime)
             {
-                if (condition(context))
-                    return true;
+                try
+                {
+                    if (condition(context))
+                        return true;
+                }
+                catch (Exception ex)
+                {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+                }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
             return false;
         }
 
-        public void UntilSuccessful(IBrowser context, Func<IElement, bool> condition, 
-            TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public void UntilSuccessful(IBrowser context, Func<IBrowser, bool> condition)
         {
-            var end = DateTime.Now + (timeout == default ? _defaultTimeout : timeout);
-            Exception? lastError = null;
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            Exception lastError = null;
 
-            while (DateTime.Now < end)
+            while (DateTime.Now < endTime)
             {
                 try
                 {
@@ -114,22 +145,25 @@ namespace FrameworkSelenium.Selenium.Waits
                 }
                 catch (Exception ex)
                 {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+
                     lastError = ex;
                 }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
-            throw new WaitTimeoutException("Timed out waiting for condition to succeed without error.", lastError);
+            throw new WaitTimeoutException(_defaultTimeout, lastError);
         }
 
-        public void UntilSuccessful(IElement context, Func<IElement, bool> condition, 
-            TimeSpan timeout = default, int pollingInterval = 500)
+        /// <inheritdoc/>
+        public void UntilSuccessful(IElement context, Func<IElement, bool> condition)
         {
-            var end = DateTime.Now + (timeout == default ? _defaultTimeout : timeout);
-            Exception? lastError = null;
+            DateTime endTime = DateTime.Now + _defaultTimeout;
+            Exception lastError = null;
 
-            while (DateTime.Now < end)
+            while (DateTime.Now < endTime)
             {
                 try
                 {
@@ -138,13 +172,24 @@ namespace FrameworkSelenium.Selenium.Waits
                 }
                 catch (Exception ex)
                 {
+                    if (!ShouldExceptionBeIgnored(ex))
+                        throw;
+
                     lastError = ex;
                 }
 
-                Thread.Sleep(pollingInterval);
+                Thread.Sleep(_defaultPollingInterval);
             }
 
-            throw new WaitTimeoutException("Timed out waiting for condition to succeed without error.", lastError);
+            throw new WaitTimeoutException(_defaultTimeout, lastError);
         }
+
+        /// <summary>
+        /// Checks if the given <see cref="Exception"/> is in <see cref="exceptionsToIgnore"/>
+        /// </summary>
+        /// <param name="ex">The potential <see cref="Exception"/> to ignore</param>
+        /// <returns><b>True</b>: The <see cref="Exception"/> should be ignored | <b>False</b>: The <see cref="Exception"/> should be thrown</returns>
+        private bool ShouldExceptionBeIgnored(Exception ex) =>
+            exceptionsToIgnore.Any(type => type.IsInstanceOfType(ex));
     }
 }

@@ -4,6 +4,7 @@ using FrameworkSelenium.Exceptions;
 using FrameworkSelenium.Selenium.Alerts;
 using FrameworkSelenium.Selenium.Elements;
 using FrameworkSelenium.Selenium.Locators;
+using FrameworkSelenium.Selenium.Waits;
 using FrameworkSelenium.Selenium.WebDrivers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 
 namespace FrameworkSelenium.Selenium.Browsers
 {
@@ -36,12 +38,6 @@ namespace FrameworkSelenium.Selenium.Browsers
                 ScreenSize = ScreenSize.Desktop;
             else
                 ScreenSize = FrameworkConfiguration.Config.ScreenSize;
-
-            //todo make attributes that set the size
-            //todo look at Relative Locators
-            //todo look at waits
-            //todo look at IElement
-            //todo find vars
 
             _driver.Manage().Window.Size = new Size(ScreenSize.Width, ScreenSize.Height);
 
@@ -170,7 +166,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <inheritdoc />
         public Size WindowSize => _driver.Manage().Window.Size;
 
-        public string DriverType => throw new NotImplementedException();
+        public string DriverType => throw new NotImplementedException();//todo
 
         /// <inheritdoc />
         public string GetCurrentWindowHandle() => _driver.CurrentWindowHandle;
@@ -227,11 +223,13 @@ namespace FrameworkSelenium.Selenium.Browsers
 
         #region Other Methods
 
+        /// <inheritdoc />
         public void SendKeys(string keys)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();//todo
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose();
@@ -241,21 +239,27 @@ namespace FrameworkSelenium.Selenium.Browsers
 
         #region Element Interaction
 
+        /// <inheritdoc />
         public IElement GetElement(ILocator locator)
         {
-            //todo add check if there is more than 1, 0
-            var e = _driver.FindElements(locator.ToBy);
-            if (e.Count > 1)
-                throw new TooManyElementsException($"{}");
-            else if (e.Count == 0)
-                throw new NoElementsException($"No elements were found with the given locator:\nType: {locator.Type}\nValue: {locator.Value}");
-            return new Element(, _driver);
+            ReadOnlyCollection<IWebElement> elements = _driver.FindElements(locator.ToBy);
+
+            if (elements.Count > 1)
+                throw new TooManyElementsException(elements.Count, locator);
+            else if (elements.Count == 0)
+                throw new NoElementsException(locator);
+
+            return new Element(elements.First(), _driver);
         }
 
+        /// <inheritdoc />
         public List<IElement> GetElements(ILocator locator)
         {
-            // todo add check if there is 0
-            ReadOnlyCollection<IWebElement> elements = _driver.FindElements(locator.ToBy());
+            ReadOnlyCollection<IWebElement> elements = _driver.FindElements(locator.ToBy);
+
+            if (elements.Count == 0)
+                throw new NoElementsException(locator);
+
             List<IElement> list = [];
             foreach (IWebElement elem in elements)
                 list.Add(new Element(elem, _driver));
@@ -263,14 +267,16 @@ namespace FrameworkSelenium.Selenium.Browsers
             return list;
         }
 
-        public bool ElementExist(ILocator locator)
+        /// <inheritdoc />
+        public bool ElementExist(ILocator locator, bool checkIfInteractable)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();//todo
         }
 
-        public bool ElementsExist(ILocator locator)
+        /// <inheritdoc />
+        public bool ElementsExist(ILocator locator, bool checkIfInteractable)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();//todo
         }
 
         #endregion

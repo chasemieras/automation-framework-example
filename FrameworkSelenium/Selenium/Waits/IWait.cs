@@ -6,7 +6,13 @@ namespace FrameworkSelenium.Selenium.Waits
 {
     public interface IWait
     {
-        IElement UntilElementExists(ILocator locator, TimeSpan? timeout = null);
-        bool Until(Func<IWebDriver, bool> condition, TimeSpan? timeout = null);
+                IElement UntilElementExists(IBrowser context, ILocator locator, TimeSpan timeout = default, int pollingInterval = 500);
+        IElement UntilElementExists(IElement context, ILocator locator, TimeSpan timeout = default, int pollingInterval = 500);
+
+        bool Until(IBrowser context, Func<IBrowser, bool> condition, TimeSpan timeout = default, int pollingInterval = 500);
+        bool Until(IElement context, Func<IElement, bool> condition, TimeSpan timeout = default, int pollingInterval = 500);
+
+        void UntilSuccessful(IBrowser context, Func<IElement, bool> condition, TimeSpan timeout = default, int pollingInterval = 500);
+        void UntilSuccessful(IElement context, Func<IElement, bool> condition, TimeSpan timeout = default, int pollingInterval = 500);
     }
 }

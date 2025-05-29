@@ -37,6 +37,12 @@ namespace FrameworkSelenium.Selenium.Browsers
             else
                 ScreenSize = FrameworkConfiguration.Config.ScreenSize;
 
+            //todo make attributes that set the size
+            //todo look at Relative Locators
+            //todo look at waits
+            //todo look at IElement
+            //todo find vars
+
             _driver.Manage().Window.Size = new Size(ScreenSize.Width, ScreenSize.Height);
 
             Environment.SetEnvironmentVariable("SE_SCREEN_WIDTH", $"{ScreenSize.Width}");
@@ -62,12 +68,16 @@ namespace FrameworkSelenium.Selenium.Browsers
 
         #region Navigation
 
+        /// <inheritdoc />
         public void Navigate(string url) => _driver.Navigate().GoToUrl(url);
 
+        /// <inheritdoc />
         public void Back() => _driver.Navigate().Back();
 
+        /// <inheritdoc />
         public void Forward() => _driver.Navigate().Forward();
 
+        /// <inheritdoc />
         public void Refresh() => _driver.Navigate().Refresh();
 
         #endregion

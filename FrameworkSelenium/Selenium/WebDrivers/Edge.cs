@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 
-namespace FrameworkSelenium.Selenium.Drivers
+namespace FrameworkSelenium.Selenium.WebDrivers
 {
     public class Edge : InterfaceDriver
     {

@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace FrameworkSelenium.Selenium.Drivers
+namespace FrameworkSelenium.Selenium.WebDrivers
 {
     public interface InterfaceDriver
     {

@@ -1,16 +1,15 @@
-﻿using FrameworkSelenium.Config;
-using FrameworkSelenium.Enums;
+﻿using FrameworkSelenium.Enums;
 using FrameworkSelenium.Exceptions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using System.Threading;
 
-namespace FrameworkSelenium.Selenium.Drivers
+namespace FrameworkSelenium.Selenium.WebDrivers
 {
     public static class DriverHelper
     {
-        private static string[] defaultOptions =
+        private static readonly string[] defaultOptions =
         [
             "--allow-insecure-localhost",
             "--enable-automation",

@@ -170,7 +170,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         public Size WindowSize => _driver.Manage().Window.Size;
 
         /// <inheritdoc />
-        public string DriverType => throw new NotImplementedException();//todo
+        public string DriverType => _driverType.ToString();
 
         /// <inheritdoc />
         public string GetCurrentWindowHandle() => _driver.CurrentWindowHandle;
@@ -228,10 +228,8 @@ namespace FrameworkSelenium.Selenium.Browsers
         #region Other Methods
 
         /// <inheritdoc />
-        public void SendKeys(string keys)
-        {
-            throw new NotImplementedException();//todo
-        }
+        public void SendKeys(string keys) =>
+            ActionBuilder.SendKeys(keys).Build().Perform();
 
         /// <inheritdoc />
         public void Dispose()
@@ -273,15 +271,35 @@ namespace FrameworkSelenium.Selenium.Browsers
         }
 
         /// <inheritdoc />
-        public bool ElementExist(ILocator locator, bool checkIfInteractable)
+        public bool ElementExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
         {
-            throw new NotImplementedException();//todo
+            Wait<IBrowser> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
+            IElement result = wait.UntilElementExists(locator);
+            if (checkIfInteractable)
+                return result.IsInteractable;
+
+            return true;
         }
 
         /// <inheritdoc />
-        public bool ElementsExist(ILocator locator, bool checkIfInteractable)
+        public bool ElementsExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
         {
-            throw new NotImplementedException();//todo
+            Wait<IBrowser> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
+            bool result = false;
+            wait.UntilSuccessful(x =>
+            {
+                List<IElement> elements = x.GetElements(locator);
+                if (elements.Count == 0)
+                    return result;
+
+                if (elements.Any(x => x.IsInteractable == false))
+                    return result;
+
+                result = true;
+                return result;
+            });
+            
+            return result;
         }
 
         #endregion

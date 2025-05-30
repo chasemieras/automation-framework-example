@@ -1,4 +1,5 @@
 using FrameworkSelenium.Selenium.Elements;
+using System;
 using System.Collections.Generic;
 
 namespace FrameworkSelenium.Selenium
@@ -26,17 +27,19 @@ namespace FrameworkSelenium.Selenium
         /// Checks if the given <see cref="Locators.Locator"/> find a WebElement
         /// </summary>
         /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
-        /// <param name="checkIfInteractable">Set to false to not check if the element is interactable</param>
+        /// <param name="checkIfInteractable">Set to false to not check if the element is Interactable</param>
+        /// <param name="defaultTimeout">The default timeout to wait for the element to exist</param>
         /// <returns><b>True</b>: the element does exist | <b>False</b>: the element does not exist </returns>
-        bool ElementExist(ILocator locator, bool checkIfInteractable);
+        bool ElementExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default);
 
         /// <summary>
         /// Checks if the given <see cref="Locators.Locator"/> find a list WebElements
         /// </summary>
         /// <param name="locator">a <see cref="Locators.Locator"/> to a WebElement you want to find</param>
-        /// <param name="checkIfInteractable">Set to false to not check if the element is interactable</param>
+        /// <param name="checkIfInteractable">Set to false to not check if the element is Interactable</param>
+        /// <param name="defaultTimeout">The default timeout to wait for the element to exist</param>
         /// <returns><b>True</b>: the elements do exist | <b>False</b>: the elements do not exist </returns>
-        bool ElementsExist(ILocator locator, bool checkIfInteractable);
+        bool ElementsExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default);
 
     }
 }

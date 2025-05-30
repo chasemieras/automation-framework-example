@@ -1,5 +1,4 @@
 ﻿using FrameworkSelenium.Exceptions;
-using FrameworkSelenium.Selenium.Browsers;
 using FrameworkSelenium.Selenium.Elements;
 using OpenQA.Selenium;
 using System;
@@ -8,28 +7,25 @@ using System.Threading;
 
 namespace FrameworkSelenium.Selenium.Waits
 {
-    /// <summary>
-    /// Forces the code to gracefully stop and repeat easily
-    /// </summary>
-    public class Wait : IWait
+    /// <remarks>
+    /// Creates a new <see cref="Wait{TContext}"/> instance with the given default timeout and polling interval.
+    /// </remarks>
+    /// <param name="defaultTimeout">the time that the wait will have before it errors</param>
+    /// <param name="defaultPollingInterval">how often the wait will wait before repeating</param>
+    /// <param name="context">the context that the wait will use to find elements</param>
+    public class Wait<TContext>(TContext context, TimeSpan defaultTimeout = default, int defaultPollingInterval = default) : IWait<TContext> where TContext : IElementFinder
     {
         //todo think of other cool waits to add
         //todo add the ability to ignore other exceptions?
 
-        private readonly TimeSpan _defaultTimeout;
-        private readonly int _defaultPollingInterval;
-
+        private readonly TimeSpan _defaultTimeout = defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout;
+        private readonly int _defaultPollingInterval = defaultPollingInterval == 0 ? 500 : defaultPollingInterval;
+        private readonly TContext _context = context;
         private readonly Type[] exceptionsToIgnore = [typeof(ForceWaitLoop), typeof(MoveTargetOutOfBoundsException),
             typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException), typeof(ElementNotInteractableException)];
 
-        public Wait(TimeSpan defaultTimeout = default, int defaultPollingInterval = default)
-        {
-            _defaultTimeout = defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout;
-            _defaultPollingInterval = defaultPollingInterval == 0 ? 500 : defaultPollingInterval;
-        }
-
         /// <inheritdoc/>
-        public IElement UntilElementExists(IBrowser context, ILocator locator)
+        public IElement UntilElementExists(ILocator locator)
         {
             DateTime endTime = DateTime.Now + _defaultTimeout;
             Exception lastError = null;
@@ -38,7 +34,7 @@ namespace FrameworkSelenium.Selenium.Waits
             {
                 try
                 {
-                    IElement element = context.GetElement(locator);
+                    IElement element = _context.GetElement(locator);
                     if (element != null)
                         return element;
                 }
@@ -57,42 +53,14 @@ namespace FrameworkSelenium.Selenium.Waits
         }
 
         /// <inheritdoc/>
-        public IElement UntilElementExists(IElement context, ILocator locator)
-        {
-            DateTime endTime = DateTime.Now + _defaultTimeout;
-            Exception lastError = null;
-
-            while (DateTime.Now < endTime)
-            {
-                try
-                {
-                    IElement element = context.GetElement(locator);
-                    if (element != null)
-                        return element;
-                }
-                catch (Exception ex)
-                {
-                    if (!ShouldExceptionBeIgnored(ex))
-                        throw;
-
-                    lastError = ex;
-                }
-
-                Thread.Sleep(_defaultPollingInterval);
-            }
-
-            throw new WaitTimeoutException(_defaultTimeout, lastError);
-        }
-
-        /// <inheritdoc/>
-        public bool Until(IBrowser context, Func<IBrowser, bool> condition)
+        public bool Until(Func<TContext, bool> condition)
         {
             DateTime endTime = DateTime.Now + _defaultTimeout;
             while (DateTime.Now < endTime)
             {
                 try
                 {
-                    if (condition(context))
+                    if (condition(_context))
                         return true;
                 }
                 catch (Exception ex)
@@ -108,30 +76,7 @@ namespace FrameworkSelenium.Selenium.Waits
         }
 
         /// <inheritdoc/>
-        public bool Until(IElement context, Func<IElement, bool> condition)
-        {
-            DateTime endTime = DateTime.Now + _defaultTimeout;
-            while (DateTime.Now < endTime)
-            {
-                try
-                {
-                    if (condition(context))
-                        return true;
-                }
-                catch (Exception ex)
-                {
-                    if (!ShouldExceptionBeIgnored(ex))
-                        throw;
-                }
-
-                Thread.Sleep(_defaultPollingInterval);
-            }
-
-            return false;
-        }
-
-        /// <inheritdoc/>
-        public void UntilSuccessful(IBrowser context, Func<IBrowser, bool> condition)
+        public void UntilSuccessful(Func<TContext, bool> condition)
         {
             DateTime endTime = DateTime.Now + _defaultTimeout;
             Exception lastError = null;
@@ -140,34 +85,7 @@ namespace FrameworkSelenium.Selenium.Waits
             {
                 try
                 {
-                    if (condition(context))
-                        return;
-                }
-                catch (Exception ex)
-                {
-                    if (!ShouldExceptionBeIgnored(ex))
-                        throw;
-
-                    lastError = ex;
-                }
-
-                Thread.Sleep(_defaultPollingInterval);
-            }
-
-            throw new WaitTimeoutException(_defaultTimeout, lastError);
-        }
-
-        /// <inheritdoc/>
-        public void UntilSuccessful(IElement context, Func<IElement, bool> condition)
-        {
-            DateTime endTime = DateTime.Now + _defaultTimeout;
-            Exception lastError = null;
-
-            while (DateTime.Now < endTime)
-            {
-                try
-                {
-                    if (condition(context))
+                    if (condition(_context))
                         return;
                 }
                 catch (Exception ex)

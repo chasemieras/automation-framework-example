@@ -1,137 +1,254 @@
-﻿using OpenQA.Selenium;
+﻿using FrameworkSelenium.Exceptions;
+using FrameworkSelenium.Selenium.Waits;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 
 namespace FrameworkSelenium.Selenium.Elements
 {
+    /// <summary>
+    /// Generates an element to use during testing
+    /// </summary>
+    /// <param name="element">the <see cref="IWebElement"/> that is going to be used</param>
+    /// <param name="driver">the current <see cref="IWebDriver"/>/<see cref="Browsers.IBrowser"/> that is being used</param>
     public class Element(IWebElement element, IWebDriver driver) : IElement
     {
         private readonly IWebElement _element = element;
         private readonly IWebDriver _driver = driver;
 
-		//todo look for NotImplementedException and implement them!
+        //todo look for NotImplementedException and implement them!
 
-		public bool IsDisplayed => throw new System.NotImplementedException();
+        #region Variables
 
-        public bool IsEnabled => throw new System.NotImplementedException();
+        private Actions ActionBuilder => new(_driver);
+        private IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)_driver;
 
-        public bool IsInteractable => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public bool IsDisplayed => _element.Displayed;
 
-        public bool IsSelected => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public bool IsEnabled => _element.Enabled;
 
-        public Point Location => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public bool IsInteractable => IsDisplayed && IsEnabled;
 
-        public string Src => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public bool IsSelected => _element.Selected;
 
-        public string Href => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public Point Location => _element.Location;
 
-        public string Value => throw new System.NotImplementedException();
+        #endregion
 
-        public string ClassName => throw new System.NotImplementedException();
+        #region Click Interactions
 
-        public string Id => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public void Click() => _element.Click();
 
-        public string Name => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public void RightClick() =>
+            ActionBuilder.ContextClick(_element).Build().Perform();
 
-        public string Title => throw new System.NotImplementedException();
+        #endregion
 
-        public string InnerHtml => throw new System.NotImplementedException();
+        #region Attributes
 
-        public string OuterHtml => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string GetAttribute(string attribute) =>
+            _element.GetAttribute(attribute);
 
-        public string Target => throw new System.NotImplementedException();
+        /// <inheritdoc/>    
+        public bool AttributeExists(string attribute) =>
+            !string.IsNullOrEmpty(GetAttribute(attribute));
 
-        public string Style => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Src => GetAttribute("src");
 
-        public string AltText => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Href => GetAttribute("href");
 
-        public string TagName => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Value => GetAttribute("value");
 
-        public string Class => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string ClassName => GetAttribute("class");
 
-        public string Rel => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Id => GetAttribute("id");
 
-        public bool Checked => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Name => GetAttribute("name");
 
-        public string Styling => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string Title => GetAttribute("title");
 
-        public string Text => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string InnerHtml => _element.GetAttribute("innerHTML");
 
-        public string ExtractString => throw new System.NotImplementedException();
+        /// <inheritdoc/>
+        public string OuterHtml => _element.GetAttribute("outerHTML");
 
-        public bool AttributeExists(string attribute, bool checkIfEmpty = true)
+        /// <inheritdoc/>
+        public string Target => GetAttribute("target");
+
+        /// <inheritdoc/>
+        public string AltText => GetAttribute("alt");
+
+        /// <inheritdoc/>
+        public string TagName => _element.TagName;
+
+        /// <inheritdoc/>
+        public string Class => GetAttribute("class");
+
+        /// <inheritdoc/>
+        public string Rel => GetAttribute("rel");
+
+        /// <inheritdoc/>
+        public bool Checked => bool.Parse(GetAttribute("checked"));
+
+        #endregion
+
+        #region Styling
+
+        /// <inheritdoc/>
+        public string Styling => GetAttribute("style");
+
+        /// <inheritdoc/>
+        public string GetCssValue(string propertyName) =>
+            _element.GetCssValue(propertyName);
+
+        #endregion
+
+        #region Text Interaction
+
+        /// <inheritdoc/>
+        public string Text => _element.Text;
+
+        /// <inheritdoc/>
+        public string ExtractString
         {
-            throw new System.NotImplementedException();
+            get
+            {
+                if (!string.IsNullOrEmpty(Text)) return Text;
+                if (!string.IsNullOrEmpty(Title)) return Title;
+                if (!string.IsNullOrEmpty(AltText)) return AltText;
+                if (!string.IsNullOrEmpty(Name)) return Name;
+                if (!string.IsNullOrEmpty(Value)) return Value;
+                return string.Empty;
+            }
         }
 
-        public void Clear()
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public void SendKeys(string text) =>
+            _element.SendKeys(text);
 
-        public void Click()
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public void SendEnter() =>
+            _element.SendKeys(Keys.Enter);
 
-        public bool ElementExist(ILocator locator, bool checkIfInteractable)
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public void Clear() =>
+            _element.Clear();
 
-        public bool ElementsExist(ILocator locator, bool checkIfInteractable)
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <inheritdoc/>
+        public void Submit() =>
+            _element.Submit();
 
-        public void ExtractText()
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
 
-        public string GetAttribute(string attribute)
-        {
-            throw new System.NotImplementedException();
-        }
+        #region Other Methods
 
+        /// <inheritdoc/>
+        public void ScrollToElement() =>
+            JavaScriptExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", _element);
+
+        /// <inheritdoc/>
+        public string GetPseudoelement(string pseudoElement = "before", string property = "content") =>
+            JavaScriptExecutor.ExecuteScript(@$"var element = arguments[0]; 
+            var pseudo = window.getComputedStyle(element, '::{pseudoElement}'); 
+            return pseudo.getPropertyValue('{property}');", _element).ToString();
+
+        #endregion
+
+        #region Element Interaction
+
+        /// <inheritdoc />
         public IElement GetElement(ILocator locator)
         {
-            throw new System.NotImplementedException();
+            if (locator.Type is Enums.LocatorType.XPath)
+                throw new LocatorMisuseException("XPaths are not supported when looking for elements within an element. Please use a different locator type.");
+
+            ReadOnlyCollection<IWebElement> elements = _element.FindElements(locator.ToBy);
+
+            if (elements.Count > 1)
+                throw new TooManyElementsException(elements.Count, locator);
+            else if (elements.Count == 0)
+                throw new NoElementsException(locator);
+
+            return new Element(elements.First(), _driver);
         }
 
+        /// <inheritdoc />
         public List<IElement> GetElements(ILocator locator)
         {
-            throw new System.NotImplementedException();
+            if (locator.Type is Enums.LocatorType.XPath)
+                throw new LocatorMisuseException("XPaths are not supported when looking for elements within an element. Please use a different locator type.");
+
+            ReadOnlyCollection<IWebElement> elements = _element.FindElements(locator.ToBy);
+
+            if (elements.Count == 0)
+                throw new NoElementsException(locator);
+
+            List<IElement> list = [];
+            foreach (IWebElement elem in elements)
+                list.Add(new Element(elem, _driver));
+            
+            return list;
         }
 
-        public string GetPseudoelement()
+        /// <inheritdoc />
+        public bool ElementExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
         {
-            throw new System.NotImplementedException();
+            if (locator.Type is Enums.LocatorType.XPath)
+                throw new LocatorMisuseException("XPaths are not supported when looking for elements within an element. Please use a different locator type.");
+
+            Wait<IElement> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
+            IElement result = wait.UntilElementExists(locator);
+            if (checkIfInteractable)
+                return result.IsInteractable;
+
+            return true;
         }
 
-        public void RightClick()
+        /// <inheritdoc />
+        public bool ElementsExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
         {
-            throw new System.NotImplementedException();
+            if (locator.Type is Enums.LocatorType.XPath)
+                throw new LocatorMisuseException("XPaths are not supported when looking for elements within an element. Please use a different locator type.");
+
+            Wait<IElement> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
+            bool result = false;
+            wait.UntilSuccessful(x =>
+            {
+                List<IElement> elements = x.GetElements(locator);
+                if (elements.Count == 0)
+                    return result;
+
+                if (elements.Any(x => x.IsInteractable == false))
+                    return result;
+
+                result = true;
+                return result;
+            });
+            
+            return result;
         }
 
-        public void ScrollToElement()
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
 
-        public void SendEnter()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SendKeys(string text)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Submit()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

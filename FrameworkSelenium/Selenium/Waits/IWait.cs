@@ -18,7 +18,8 @@ namespace FrameworkSelenium.Selenium.Waits
 
         /// <summary>
         /// Waits for the <paramref name="condition"/> to be met 
-        /// /// <param name="condition">The code you want repeated</param>
+        /// </summary>
+        /// <param name="condition">The code you want repeated</param>
         /// <returns><b>True</b>: The <paramref name="condition"/> was met before the timeout | <b>False</b>: The <paramref name="condition"/> was not met before the timeout </returns>
         bool Until(Func<TContext, bool> condition);
 

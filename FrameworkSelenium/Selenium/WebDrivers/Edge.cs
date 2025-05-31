@@ -4,7 +4,7 @@ using OpenQA.Selenium.Edge;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public class Edge : InterfaceDriver
+    public class Edge : IDriver
     {
 
         public DriverOptions GenerateDriverOptions

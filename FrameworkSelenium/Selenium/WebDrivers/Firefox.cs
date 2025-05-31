@@ -4,7 +4,7 @@ using OpenQA.Selenium.Firefox;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public class Firefox : InterfaceDriver
+    public class Firefox : IDriver
     {
 
         public DriverOptions GenerateDriverOptions

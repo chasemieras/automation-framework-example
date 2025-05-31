@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public class Chrome : InterfaceDriver
+    public class Chrome : IDriver
     {
 
         public  DriverOptions GenerateDriverOptions

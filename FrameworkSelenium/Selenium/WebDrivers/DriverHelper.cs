@@ -45,7 +45,7 @@ namespace FrameworkSelenium.Selenium.WebDrivers
             {
                 if (_driverThreadLocal.Value == null)
                 {
-                    InterfaceDriver driver;
+                    IDriver driver;
                     DriverOptions options;
                     switch (driverType)
                     {

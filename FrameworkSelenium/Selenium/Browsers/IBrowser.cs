@@ -84,6 +84,8 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// </summary>
         bool IsAlertPresent();
 
+        
+
         #endregion
 
         #region iFrame Handling
@@ -91,8 +93,8 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <summary>
         /// Switches to the frame using the given locator
         /// </summary>
-        /// <param name="locatorForFrame">Locator to the iFrame desdired</param>
-        void SwitchToFrame(Locator locatorForFrame);
+        /// <param name="locatorForFrame">Locator to the iFrame desired</param>
+        void SwitchToFrame(ILocator locatorForFrame);
 
         /// <summary>
         /// Switches to the frame using the given frame index
@@ -167,7 +169,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         string GetCurrentWindowHandle();
 
         /// <summary>
-        /// Gets all of the window hanles
+        /// Gets all of the window handles
         /// </summary>
         /// <returns>A ReadOnlyCollection of string that are the window handles</returns>
         ReadOnlyCollection<string> GetAllWindowHandles();

@@ -112,7 +112,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         #region iFrame Handling
 
         /// <inheritdoc />
-        public void SwitchToFrame(Locator locatorForFrame)
+        public void SwitchToFrame(ILocator locatorForFrame)
         {
             if (locatorForFrame.Type is LocatorType.LinkText or LocatorType.Name or LocatorType.PartialLinkText)
                 throw new LocatorMisuseException($"The locator {locatorForFrame.ToBy} is of type '{locatorForFrame.Type}', which cannot be used by iFrames");

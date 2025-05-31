@@ -2,7 +2,7 @@
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public interface InterfaceDriver
+    public interface IDriver
     {
         public abstract DriverOptions GenerateDriverOptions { get; }
         public abstract IWebDriver GenerateWebDriver(DriverOptions options);

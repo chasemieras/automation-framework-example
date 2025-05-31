@@ -14,7 +14,7 @@ namespace FrameworkTests
         public void Test1()
         {
             string basePath = AppContext.BaseDirectory;
-            string path = Path.Combine(basePath, @"..\..\..\config.json");
+            string path = Path.Combine(basePath, @"..\..\..\config.json"); //TODO make this work with VS Code
             string fullPath = Path.GetFullPath(path);
             Environment.SetEnvironmentVariable("FRAMEWORK_CONFIG", fullPath);
             

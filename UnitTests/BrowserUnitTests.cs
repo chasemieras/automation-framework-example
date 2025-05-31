@@ -20,7 +20,7 @@ namespace UnitTests
         //todo look at Relative Locators
 
         [Fact]
-        public void EnsureBrowserIsNotNull()
+        public void VerifyBrowserIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -29,7 +29,7 @@ namespace UnitTests
         #region Variables
 
         [Fact]
-        public void EnsurePageTitleIsNotNull()
+        public void VerifyPageTitleIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -43,7 +43,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureCurrentUrlIsNotNull()
+        public void VerifyCurrentUrlIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -57,7 +57,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsurePageSourceIsNotNull()
+        public void VerifyPageSourceIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -71,7 +71,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureDriverTypeIsNotNull()
+        public void VerifyDriverTypeIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -89,7 +89,7 @@ namespace UnitTests
         #region Navigation
 
         [Fact]
-        public void EnsureCanNavigate()
+        public void VerifyCanNavigate()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -101,7 +101,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureCanGoBack()
+        public void VerifyCanGoBack()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -123,7 +123,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureCanGoForward()
+        public void VerifyCanGoForward()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -149,7 +149,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureCanRefresh()
+        public void VerifyCanRefresh()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -174,7 +174,7 @@ namespace UnitTests
         #region Alert Interaction
 
         [Fact]
-        public void EnsureSwitchToAlertPositive()
+        public void VerifySwitchToAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
@@ -188,7 +188,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToAlertNegative()
+        public void VerifySwitchToAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToAlert())
@@ -201,7 +201,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureAcceptAlertPositive()
+        public void VerifyAcceptAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Object.AcceptAlert();
@@ -210,7 +210,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureAcceptAlertNegative()
+        public void VerifyAcceptAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.AcceptAlert())
@@ -223,7 +223,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureDismissAlertPositive()
+        public void VerifyDismissAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Object.DismissAlert();
@@ -232,7 +232,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureDismissAlertNegative()
+        public void VerifyDismissAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DismissAlert())
@@ -245,7 +245,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureIsAlertPresentPositive()
+        public void VerifyIsAlertPresentPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.IsAlertPresent()).Returns(true);
@@ -257,7 +257,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureIsAlertPresentNegative()
+        public void VerifyIsAlertPresentNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.IsAlertPresent()).Returns(false);
@@ -273,7 +273,7 @@ namespace UnitTests
         #region iFrame Handling
 
         [Fact]
-        public void EnsureSwitchToFrameLocatorPositive()
+        public void VerifySwitchToFrameLocatorPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<ILocator>()));
@@ -284,7 +284,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToFrameLocatorNegative()
+        public void VerifySwitchToFrameLocatorNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<ILocator>()))
@@ -297,7 +297,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToFrameIntPositive()
+        public void VerifySwitchToFrameIntPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<int>()));
@@ -308,7 +308,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToFrameIntNegative()
+        public void VerifySwitchToFrameIntNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<int>()))
@@ -321,7 +321,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToDefaultContent()
+        public void VerifySwitchToDefaultContent()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -330,7 +330,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToDefaultContentFromFrameLocator()
+        public void VerifySwitchToDefaultContentFromFrameLocator()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -342,7 +342,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToDefaultContentFromFrameInt()
+        public void VerifySwitchToDefaultContentFromFrameInt()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -354,7 +354,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void EnsureSwitchToDefaultContentFromAlert()
+        public void VerifySwitchToDefaultContentFromAlert()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
@@ -373,46 +373,208 @@ namespace UnitTests
 
         #endregion
 
-        // #region Cookie Handling
+        #region Cookie Handling
 
-        // /// <summary>
-        // /// Adds a new <see cref="Cookie"/> with the given <paramref name="name"/> and <paramref name="value"/>
-        // /// </summary>
-        // /// <param name="name">the name of the cookie you want to add</param>
-        // /// <param name="value">the value of the cookie you want to add</param>
-        // void AddCookie(string name, string value);
+        [Fact]
+        public void VerifyAddCookie()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.AddCookie(It.IsAny<string>(), It.IsAny<string>()));
+            mockBrowser.Setup(b => b.GetCookie(It.IsAny<string>())).Returns(new Cookie("testCookie", "testValue"));
 
-        // /// <summary>
-        // /// Gets a <see cref="Cookie"/> based on the <paramref name="name"/> given
-        // /// </summary>
-        // /// <param name="name">the name of the cookie you want to get</param>
-        // /// <returns>A <see cref="Cookie"/></returns>
-        // Cookie GetCookie(string name);
+            string name = "testCookie";
+            string value = "testValue";
+            mockBrowser.Object.AddCookie(name, value);
 
-        // /// <summary>
-        // /// Deletes a <see cref="Cookie"/> based on the <paramref name="name"/> given
-        // /// </summary>
-        // /// <param name="name">the name of the cookie you want to get</param>
-        // void DeleteCookie(string name);
+            Cookie cookie = mockBrowser.Object.GetCookie(name);
 
-        // /// <summary>
-        // /// Deletes all <see cref="Cookie"/>s
-        // /// </summary>
-        // void DeleteAllCookies();
+            cookie.Should().NotBeNull();
+            cookie.Name.Should().Be(name);
+            cookie.Value.Should().Be(value);
 
-        // /// <summary>
-        // /// Gets all <see cref="Cookie"/>s
-        // /// </summary>
-        // /// <returns>A ReadOnlyCollection of <see cref="Cookie"/>s</returns>
-        // ReadOnlyCollection<Cookie> GetAllCookies();
+            mockBrowser.Verify(b => b.AddCookie(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
 
-        // /// <summary>
-        // /// Checks that the given <see cref="Cookie"/> <paramref name="name"/> is present
-        // /// </summary>
-        // /// <returns><b>True</b>: The <see cref="Cookie"/> is present | <b>False</b>: The <see cref="Cookie"/> is not present</returns>
-        // bool DoesCookieExist(string name);
+        [Fact]
+        public void VerifyGetCookiePositive()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.GetCookie(It.IsAny<string>())).Returns(new Cookie("testCookie", "testValue"));
 
-        // #endregion
+            string name = "testCookie";
+            string value = "testValue";
+
+            Cookie cookie = mockBrowser.Object.GetCookie(name);
+
+            cookie.Should().NotBeNull();
+            cookie.Name.Should().Be(name);
+            cookie.Value.Should().Be(value);
+
+            mockBrowser.Verify(b => b.GetCookie(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyGetCookieNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.GetCookie(null))
+                        .Throws(new ArgumentNullException("name", "Cookie name cannot be null"));
+
+            Action act = () => mockBrowser.Object.GetCookie(null);
+            act.Should().Throw<ArgumentNullException>().WithMessage("Cookie name cannot be null (Parameter 'name')");
+        }
+
+        [Fact]
+        public void VerifyGetCookieNegative()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.GetCookie(It.IsAny<string>())).Returns((Cookie)null);
+
+            string name = "nonexistentCookie";
+
+            Cookie cookie = mockBrowser.Object.GetCookie(name);
+
+            cookie.Should().BeNull();
+
+            mockBrowser.Verify(b => b.GetCookie(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyDeleteCookie()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.DeleteCookie(It.IsAny<string>()));
+
+            string name = "testCookie";
+
+            mockBrowser.Object.DeleteCookie(name);
+
+            mockBrowser.Verify(b => b.DeleteCookie(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyDeleteCookieVerifyAfter()
+        {
+            // Arrange
+            Mock<IBrowser> mockBrowser = new();
+            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+
+            mockBrowser.Setup(b => b.GetAllCookies())
+                .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
+            mockBrowser.Setup(b => b.DeleteCookie(It.IsAny<string>()))
+                .Callback<string>(name => cookieList.RemoveAll(c => c.Name == name));
+
+            mockBrowser.Object.GetAllCookies().Should().HaveCount(1);
+
+            mockBrowser.Object.DeleteCookie("testCookie");
+
+            mockBrowser.Object.GetAllCookies().Should().BeEmpty();
+
+            mockBrowser.Verify(b => b.DeleteCookie("testCookie"), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyDeleteCookieNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.DeleteCookie(null))
+                        .Throws(new ArgumentNullException("name", "Cookie name cannot be null"));
+
+            Action act = () => mockBrowser.Object.DeleteCookie(null);
+            act.Should().Throw<ArgumentNullException>().WithMessage("Cookie name cannot be null (Parameter 'name')");
+        }
+
+        [Fact]
+        public void VerifyDeleteAllCookie()
+        {
+            // Arrange
+            Mock<IBrowser> mockBrowser = new();
+            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+
+            mockBrowser.Setup(b => b.GetAllCookies())
+                .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
+            mockBrowser.Setup(b => b.DeleteAllCookies())
+                .Callback(() => cookieList.Clear());
+
+            mockBrowser.Object.GetAllCookies().Should().HaveCount(1);
+
+            mockBrowser.Object.DeleteAllCookies();
+
+            mockBrowser.Object.GetAllCookies().Should().BeEmpty();
+
+            mockBrowser.Verify(b => b.DeleteAllCookies(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyGetAllCookie()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+
+            mockBrowser.Setup(b => b.GetAllCookies())
+                .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
+
+            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies();
+            cookieJar.Should().HaveCount(1);
+            cookieJar[0].Name.Should().Be("testCookie");
+            cookieJar[0].Value.Should().Be("testValue");
+
+            mockBrowser.Verify(b => b.GetAllCookies(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyGetAllCookieEmpty()
+        {
+            Mock<IBrowser> mockBrowser = new();
+
+            mockBrowser.Setup(b => b.GetAllCookies())
+                .Returns(() => new ReadOnlyCollection<Cookie>(new List<Cookie>()));
+
+            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies();
+            cookieJar.Should().HaveCount(0);
+
+            mockBrowser.Verify(b => b.GetAllCookies(), Times.Once);
+        }
+
+
+        [Fact]
+        public void VerifyDoesCookieExistPositive()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.DoesCookieExist(It.IsAny<string>())).Returns(true);
+
+            bool doesIt = mockBrowser.Object.DoesCookieExist("testCookie");
+
+            doesIt.Should().BeTrue();
+
+            mockBrowser.Verify(b => b.DoesCookieExist(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyDoesCookieExistNegative()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.DoesCookieExist(It.IsAny<string>())).Returns(false);
+
+            bool doesIt = mockBrowser.Object.DoesCookieExist("testCookie");
+
+            doesIt.Should().BeFalse();
+
+            mockBrowser.Verify(b => b.DoesCookieExist(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyDoesCookieExistNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.DoesCookieExist(null))
+                        .Throws(new ArgumentNullException("name", "Cookie name cannot be null"));
+
+            Action act = () => mockBrowser.Object.DoesCookieExist(null);
+            act.Should().Throw<ArgumentNullException>().WithMessage("Cookie name cannot be null (Parameter 'name')");
+        }
+
+        #endregion
 
         // #region Window + Tab Interaction
 
@@ -510,7 +672,7 @@ namespace UnitTests
         // #region Element Interaction
 
         // [Fact]
-        // public void EnsureCanGetElement()
+        // public void VerifyCanGetElement()
         // {
         //     // Arrange
         //     Mock<IBrowser> mockBrowser = new();
@@ -526,7 +688,7 @@ namespace UnitTests
         // }
 
         // [Fact]
-        // public void EnsureCanGetElements()
+        // public void VerifyCanGetElements()
         // {
         //     // Arrange
         //     Mock<IBrowser> mockBrowser = new();

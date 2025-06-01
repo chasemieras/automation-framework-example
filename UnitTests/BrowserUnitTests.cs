@@ -1,23 +1,21 @@
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+
 using Moq;
 using OpenQA.Selenium;
-using FrameworkSelenium.Selenium.Elements;
 using FrameworkSelenium.Selenium.Browsers;
 using FrameworkSelenium.Selenium.Locators;
 using FluentAssertions;
 using System.Collections.ObjectModel;
-using FrameworkSelenium.Selenium.Alerts;
+using FrameworkSelenium;
+using System.Drawing;
+using FrameworkSelenium.Selenium.Elements;
 
 namespace UnitTests
 {
     public class BrowserUnitTests
     {
-        //todo add more tests with moq
-        //todo add workflow on github to run unit tests after a PR is merged
-        //todo add README
-        //todo add docker compose of grid
-        //todo add xunit test runner
-        //todo make attributes that set the size
-        //todo look at Relative Locators
 
         [Fact]
         public void VerifyBrowserIsNotNull()
@@ -178,26 +176,26 @@ namespace UnitTests
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
-            mockBrowser.Setup(b => b.SwitchToAlert()).Returns(mockAlert.Object);
+            mockBrowser.Setup(b => b.SwitchToAlert).Returns(mockAlert.Object);
 
-            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert();
+            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert;
             alert.Should().NotBeNull();
             alert.Should().Be(mockAlert.Object);
 
-            mockBrowser.Verify(b => b.SwitchToAlert(), Times.Once);
+            mockBrowser.Verify(b => b.SwitchToAlert, Times.Once);
         }
 
         [Fact]
         public void VerifySwitchToAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
-            mockBrowser.Setup(b => b.SwitchToAlert())
+            mockBrowser.Setup(b => b.SwitchToAlert)
                         .Throws(new NoAlertPresentException("Alert not found"));
 
-            Action act = () => mockBrowser.Object.SwitchToAlert();
+            Action act = () => { FrameworkSelenium.Selenium.Alerts.IAlert _ = mockBrowser.Object.SwitchToAlert; };
             act.Should().Throw<NoAlertPresentException>().WithMessage("Alert not found");
 
-            mockBrowser.Verify(b => b.SwitchToAlert(), Times.Once);
+            mockBrowser.Verify(b => b.SwitchToAlert, Times.Once);
         }
 
         [Fact]
@@ -248,24 +246,24 @@ namespace UnitTests
         public void VerifyIsAlertPresentPositive()
         {
             Mock<IBrowser> mockBrowser = new();
-            mockBrowser.Setup(b => b.IsAlertPresent()).Returns(true);
+            mockBrowser.Setup(b => b.IsAlertPresent).Returns(true);
 
-            bool isPresent = mockBrowser.Object.IsAlertPresent();
+            bool isPresent = mockBrowser.Object.IsAlertPresent;
 
             isPresent.Should().BeTrue();
-            mockBrowser.Verify(b => b.IsAlertPresent(), Times.Once);
+            mockBrowser.Verify(b => b.IsAlertPresent, Times.Once);
         }
 
         [Fact]
         public void VerifyIsAlertPresentNegative()
         {
             Mock<IBrowser> mockBrowser = new();
-            mockBrowser.Setup(b => b.IsAlertPresent()).Returns(false);
+            mockBrowser.Setup(b => b.IsAlertPresent).Returns(false);
 
-            bool isPresent = mockBrowser.Object.IsAlertPresent();
+            bool isPresent = mockBrowser.Object.IsAlertPresent;
 
             isPresent.Should().BeFalse();
-            mockBrowser.Verify(b => b.IsAlertPresent(), Times.Once);
+            mockBrowser.Verify(b => b.IsAlertPresent, Times.Once);
         }
 
         #endregion
@@ -360,9 +358,9 @@ namespace UnitTests
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
 
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
-            mockBrowser.Setup(b => b.SwitchToAlert()).Returns(mockAlert.Object);
+            mockBrowser.Setup(b => b.SwitchToAlert).Returns(mockAlert.Object);
 
-            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert();
+            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert;
             alert.Should().NotBeNull();
             alert.Should().Be(mockAlert.Object);
 
@@ -457,18 +455,18 @@ namespace UnitTests
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
 
-            mockBrowser.Setup(b => b.GetAllCookies())
+            mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
             mockBrowser.Setup(b => b.DeleteCookie(It.IsAny<string>()))
                 .Callback<string>(name => cookieList.RemoveAll(c => c.Name == name));
 
-            mockBrowser.Object.GetAllCookies().Should().HaveCount(1);
+            mockBrowser.Object.GetAllCookies.Should().HaveCount(1);
 
             mockBrowser.Object.DeleteCookie("testCookie");
 
-            mockBrowser.Object.GetAllCookies().Should().BeEmpty();
+            mockBrowser.Object.GetAllCookies.Should().BeEmpty();
 
             mockBrowser.Verify(b => b.DeleteCookie("testCookie"), Times.Once);
         }
@@ -489,18 +487,18 @@ namespace UnitTests
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
 
-            mockBrowser.Setup(b => b.GetAllCookies())
+            mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
             mockBrowser.Setup(b => b.DeleteAllCookies())
                 .Callback(() => cookieList.Clear());
 
-            mockBrowser.Object.GetAllCookies().Should().HaveCount(1);
+            mockBrowser.Object.GetAllCookies.Should().HaveCount(1);
 
             mockBrowser.Object.DeleteAllCookies();
 
-            mockBrowser.Object.GetAllCookies().Should().BeEmpty();
+            mockBrowser.Object.GetAllCookies.Should().BeEmpty();
 
             mockBrowser.Verify(b => b.DeleteAllCookies(), Times.Once);
         }
@@ -509,17 +507,17 @@ namespace UnitTests
         public void VerifyGetAllCookie()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = [new ("testCookie", "testValue")];
+            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
 
-            mockBrowser.Setup(b => b.GetAllCookies())
+            mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
 
-            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies();
+            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies;
             cookieJar.Should().HaveCount(1);
             cookieJar[0].Name.Should().Be("testCookie");
             cookieJar[0].Value.Should().Be("testValue");
 
-            mockBrowser.Verify(b => b.GetAllCookies(), Times.Once);
+            mockBrowser.Verify(b => b.GetAllCookies, Times.Once);
         }
 
         [Fact]
@@ -527,13 +525,13 @@ namespace UnitTests
         {
             Mock<IBrowser> mockBrowser = new();
 
-            mockBrowser.Setup(b => b.GetAllCookies())
+            mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(new List<Cookie>()));
 
-            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies();
+            ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies;
             cookieJar.Should().HaveCount(0);
 
-            mockBrowser.Verify(b => b.GetAllCookies(), Times.Once);
+            mockBrowser.Verify(b => b.GetAllCookies, Times.Once);
         }
 
 
@@ -576,188 +574,533 @@ namespace UnitTests
 
         #endregion
 
-        // #region Window + Tab Interaction
+        #region Window + Tab Interaction
 
-        // /// <summary>
-        // /// The <see cref="ScreenSize"/> of the browser
-        // /// </summary>
-        // ScreenSize ScreenSize { get; }
+        [Fact]
+        public void VerifyScreenSizeDesktop()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScreenSize).Returns(ScreenSize.Desktop);
+            ScreenSize size = mockBrowser.Object.ScreenSize;
 
-        // /// <summary>
-        // /// The <see cref="Size"/> of the current window
-        // /// </summary>
-        // Size WindowSize { get; }
+            size.Should().NotBeNull();
+            size.Type.Should().Be(ScreenSize.Desktop.Type);
+            size.Width.Should().Be(ScreenSize.Desktop.Width);
+            size.Height.Should().Be(ScreenSize.Desktop.Height);
 
-        // /// <summary>
-        // /// Gets the current window handle
-        // /// </summary>
-        // /// <returns>A string that is the current window handle</returns>
-        // string GetCurrentWindowHandle();
+            mockBrowser.Verify(b => b.ScreenSize, Times.Once);
+        }
 
-        // /// <summary>
-        // /// Gets all of the window handles
-        // /// </summary>
-        // /// <returns>A ReadOnlyCollection of string that are the window handles</returns>
-        // ReadOnlyCollection<string> GetAllWindowHandles();
+        [Fact]
+        public void VerifyScreenSizeMobile()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScreenSize).Returns(ScreenSize.Mobile);
+            ScreenSize size = mockBrowser.Object.ScreenSize;
 
-        // /// <summary>
-        // /// Closes the current tab, or window if there is only one tab
-        // /// </summary>
-        // void CloseCurrentWindow();
+            size.Should().NotBeNull();
+            size.Type.Should().Be(ScreenSize.Mobile.Type);
+            size.Width.Should().Be(ScreenSize.Mobile.Width);
+            size.Height.Should().Be(ScreenSize.Mobile.Height);
 
-        // /// <summary>
-        // /// Switches to a window with the given <paramref name="windowHandle"/>
-        // /// </summary>
-        // /// <param name="windowHandle">The name of the window you want to go to</param>
-        // void SwitchToWindow(string windowHandle);
+            mockBrowser.Verify(b => b.ScreenSize, Times.Once);
+        }
 
-        // /// <summary>
-        // /// Opens and navigates to a new window
-        // /// </summary>
-        // void SwitchToNewWindow();
+        [Fact]
+        public void VerifyScreenSizeTablet()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScreenSize).Returns(ScreenSize.Tablet);
+            ScreenSize size = mockBrowser.Object.ScreenSize;
 
-        // /// <summary>
-        // /// Opens and navigates to a new tab
-        // /// </summary>
-        // void SwitchToNewTab();
+            size.Should().NotBeNull();
+            size.Type.Should().Be(ScreenSize.Tablet.Type);
+            size.Width.Should().Be(ScreenSize.Tablet.Width);
+            size.Height.Should().Be(ScreenSize.Tablet.Height);
 
-        // /// <summary>
-        // /// Calls to <see cref="WebDrivers.DriverHelper"/> to quit the current browser running
-        // /// </summary>
-        // void Quit();
+            mockBrowser.Verify(b => b.ScreenSize, Times.Once);
+        }
 
-        // #endregion
+        [Fact]
+        public void VerifyScreenSizeNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScreenSize).Returns((ScreenSize)null);
+            ScreenSize size = mockBrowser.Object.ScreenSize;
 
-        // #region Scrolling
+            size.Should().BeNull();
 
-        // /// <summary>
-        // /// Scrolls to the bottom of the page
-        // /// </summary>
-        // void ScrollToBottom();
+            mockBrowser.Verify(b => b.ScreenSize, Times.Once);
+        }
 
-        // /// <summary>
-        // /// Scrolls to the top of the page
-        // /// </summary>
-        // void ScrollToTop();
+        [Fact]
+        public void VerifyWindowSizeDesktop()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.WindowSize).Returns(new Size(ScreenSize.Desktop.Width, ScreenSize.Desktop.Height));
+            Size size = mockBrowser.Object.WindowSize;
 
-        // #endregion
+            size.Should().NotBeNull();
+            size.Width.Should().Be(ScreenSize.Desktop.Width);
+            size.Height.Should().Be(ScreenSize.Desktop.Height);
+            size.IsEmpty.Should().BeFalse();
 
-        // #region JavaScript
+            mockBrowser.Verify(b => b.WindowSize, Times.Once);
+        }
 
-        // /// <summary>
-        // /// Runs the given JavaScript
-        // /// </summary>
-        // /// <param name="javaScriptToRun">JS to run</param>
-        // void ExecuteJavaScript(string javaScriptToRun);
+        [Fact]
+        public void VerifyWindowSizeMobile()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.WindowSize).Returns(new Size(ScreenSize.Mobile.Width, ScreenSize.Mobile.Height));
+            Size size = mockBrowser.Object.WindowSize;
 
-        // /// <summary>
-        // /// Runs JavaScript that returns something
-        // /// </summary>
-        // /// <param name="javaScriptToRun">JS to run</param>
-        // /// <returns>something</returns>
-        // object ExecuteJavaScriptThatReturns(string javaScriptToRun);
+            size.Should().NotBeNull();
+            size.Width.Should().Be(ScreenSize.Mobile.Width);
+            size.Height.Should().Be(ScreenSize.Mobile.Height);
+            size.IsEmpty.Should().BeFalse();
 
-        // #endregion
+            mockBrowser.Verify(b => b.WindowSize, Times.Once);
+        }
 
-        // #region Other Methods
+        [Fact]
+        public void VerifyWindowSizeTablet()
+        {
+            Helper.SetFrameworkConfiguration("config.json");
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.WindowSize).Returns(new Size(ScreenSize.Tablet.Width, ScreenSize.Tablet.Height));
+            Size size = mockBrowser.Object.WindowSize;
 
-        // /// <summary>
-        // /// Sends given keys to the <see cref="Browser"/>
-        // /// </summary>
-        // /// <param name="keys">specific text or <see cref="Keys"/></param>
-        // void SendKeys(string keys);
+            size.Should().NotBeNull();
+            size.Width.Should().Be(ScreenSize.Tablet.Width);
+            size.Height.Should().Be(ScreenSize.Tablet.Height);
+            size.IsEmpty.Should().BeFalse();
 
-        // #endregion
+            mockBrowser.Verify(b => b.WindowSize, Times.Once);
+        }
 
-        // #region Element Interaction
+        [Fact]
+        public void VerifyWindowSizeNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.WindowSize).Returns(null);
+            Size size = mockBrowser.Object.WindowSize;
 
-        // [Fact]
-        // public void VerifyCanGetElement()
-        // {
-        //     // Arrange
-        //     Mock<IBrowser> mockBrowser = new();
-        //     Mock<IElement> mockElement = new();
-        //     mockBrowser.Setup(b => b.GetElement(It.IsAny<ILocator>())).Returns(mockElement.Object);
+            size.Width.Should().Be(0);
+            size.Height.Should().Be(0);
+            size.IsEmpty.Should().BeTrue();
 
-        //     // Act
-        //     var element = mockBrowser.Object.GetElement(Locator.Id("test"));
+            mockBrowser.Verify(b => b.WindowSize, Times.Once);
+        }
 
-        //     // Assert
-        //     element.Should().NotBeNull();
-        //     mockBrowser.Verify(b => b.GetElement(It.IsAny<ILocator>()), Times.Once);
-        // }
+        [Fact]
+        public void VerifyGetCurrentWindowHandle()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.GetCurrentWindowHandle).Returns("currentWindowHandle123");
+            string handle = mockBrowser.Object.GetCurrentWindowHandle;
 
-        // [Fact]
-        // public void VerifyCanGetElements()
-        // {
-        //     // Arrange
-        //     Mock<IBrowser> mockBrowser = new();
-        //     Mock<IElement> mockElement = new();
-        //     List<IElement> mockElements = [mockElement.Object];
-        //     mockBrowser.Setup(b => b.GetElements(It.IsAny<ILocator>())).Returns(mockElements);
+            handle.Should().NotBeNullOrEmpty();
+            handle.Should().Be("currentWindowHandle123");
 
-        //     // Act
-        //     var elements = mockBrowser.Object.GetElements(Locator.Class("test"));
+            mockBrowser.Verify(b => b.GetCurrentWindowHandle, Times.Once);
+        }
 
-        //     // Assert
-        //     elements.Should().NotBeNull();
-        //     elements.Count.Should().Be(1);
-        //     mockBrowser.Verify(b => b.GetElements(It.IsAny<ILocator>()), Times.Once);
-        // }
+        [Fact]
+        public void VerifyGetAllWindowHandlesSingle()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "windowHandle1" };
 
-        // /// <inheritdoc />
-        // public bool ElementExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
-        // {
-        //     Wait<IBrowser> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
-        //     IElement result = wait.UntilElementExists(locator);
-        //     if (checkIfInteractable)
-        //         return result.IsInteractable;
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
 
-        //     return true;
-        // }
+            ReadOnlyCollection<string> windowHandles = mockBrowser.Object.GetAllWindowHandles;
+            windowHandles.Should().NotBeNull();
+            windowHandles.Should().HaveCount(1);
+            windowHandles[0].Should().Be("windowHandle1");
 
-        // /// <inheritdoc />
-        // public bool ElementsExist(ILocator locator, bool checkIfInteractable = true, TimeSpan defaultTimeout = default)
-        // {
-        //     Wait<IBrowser> wait = new(this, defaultTimeout == TimeSpan.Zero ? TimeSpan.FromSeconds(1) : defaultTimeout);
-        //     bool result = false;
-        //     wait.UntilSuccessful(x =>
-        //     {
-        //         List<IElement> elements = x.GetElements(locator);
-        //         if (elements.Count == 0)
-        //             return result;
+            mockBrowser.Verify(b => b.GetAllWindowHandles, Times.Once);
+        }
 
-        //         if (elements.Any(x => x.IsInteractable == false))
-        //             return result;
+        [Fact]
+        public void VerifyGetAllWindowHandlesMultiple()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "windowHandle1", "windowHandle2", "windowHandle3" };
 
-        //         result = true;
-        //         return result;
-        //     });
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
 
-        //     return result;
-        // }
+            ReadOnlyCollection<string> windowHandles = mockBrowser.Object.GetAllWindowHandles;
+            windowHandles.Should().NotBeNull();
+            windowHandles.Should().HaveCount(3);
 
-        // #endregion
+            windowHandles[0].Should().Be("windowHandle1");
+            windowHandles[1].Should().Be("windowHandle2");
+            windowHandles[2].Should().Be("windowHandle3");
+
+            mockBrowser.Verify(b => b.GetAllWindowHandles, Times.Once);
+        }
+
+        [Fact]
+        public void VerifyGetAllWindowHandlesEmpty()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string>();
+
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+
+            ReadOnlyCollection<string> windowHandles = mockBrowser.Object.GetAllWindowHandles;
+            windowHandles.Should().NotBeNull();
+            windowHandles.Should().HaveCount(0);
+
+            mockBrowser.Verify(b => b.GetAllWindowHandles, Times.Once);
+        }
+
+        [Fact]
+        public void VerifyCloseCurrentWindowSingle()
+        {
+            // Arrange
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "window1" };
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+            mockBrowser.Setup(b => b.CloseCurrentWindow())
+                .Callback(() =>
+                {
+                    if (handles.Count > 0)
+                        handles.RemoveAt(handles.Count - 1);
+                });
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(1);
+
+            mockBrowser.Object.CloseCurrentWindow();
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(0);
+
+            mockBrowser.Verify(b => b.CloseCurrentWindow(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyCloseCurrentWindowMultiple()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "window1", "window2" };
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+            mockBrowser.Setup(b => b.CloseCurrentWindow())
+                .Callback(() =>
+                {
+                    if (handles.Count > 0)
+                        handles.RemoveAt(handles.Count - 1);
+                });
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(2);
+
+            mockBrowser.Object.CloseCurrentWindow();
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(1);
+
+            mockBrowser.Verify(b => b.CloseCurrentWindow(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifySwitchToWindow()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "window1", "window2" };
+            string currentHandle = "window1";
+
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+            mockBrowser.Setup(b => b.GetCurrentWindowHandle)
+                .Returns(() => currentHandle);
+            mockBrowser.Setup(b => b.SwitchToWindow(It.IsAny<string>()))
+                .Callback<string>(handle =>
+                {
+                    if (handles.Contains(handle))
+                        currentHandle = handle;
+                });
+
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("window1");
+
+            mockBrowser.Object.SwitchToWindow("window2");
+
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("window2");
+
+            mockBrowser.Verify(b => b.SwitchToWindow("window2"), Times.Once);
+        }
+
+        [Fact]
+        public void VerifySwitchToNewWindow()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "window1" };
+            string currentHandle = "window1";
+
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+            mockBrowser.Setup(b => b.GetCurrentWindowHandle)
+                .Returns(() => currentHandle);
+            mockBrowser.Setup(b => b.SwitchToNewWindow())
+                .Callback(() =>
+                {
+                    string newHandle = $"window{handles.Count + 1}";
+                    handles.Add(newHandle);
+                    currentHandle = newHandle;
+                });
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(1);
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("window1");
+
+            mockBrowser.Object.SwitchToNewWindow();
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(2);
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("window2");
+
+            mockBrowser.Verify(b => b.SwitchToNewWindow(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifySwitchToNewTab()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            List<string> handles = new List<string> { "tab1" };
+            string currentHandle = "tab1";
+
+            mockBrowser.Setup(b => b.GetAllWindowHandles)
+                .Returns(() => new ReadOnlyCollection<string>(handles));
+            mockBrowser.Setup(b => b.GetCurrentWindowHandle)
+                .Returns(() => currentHandle);
+            mockBrowser.Setup(b => b.SwitchToNewTab())
+                .Callback(() =>
+                {
+                    string newHandle = $"tab{handles.Count + 1}";
+                    handles.Add(newHandle);
+                    currentHandle = newHandle;
+                });
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(1);
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("tab1");
+
+            mockBrowser.Object.SwitchToNewTab();
+
+            mockBrowser.Object.GetAllWindowHandles.Should().HaveCount(2);
+            mockBrowser.Object.GetCurrentWindowHandle.Should().Be("tab2");
+
+            mockBrowser.Verify(b => b.SwitchToNewTab(), Times.Once);
+        }
+        [Fact]
+        public void VerifyQuit()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.Quit());
+
+            mockBrowser.Object.Quit();
+
+            mockBrowser.Verify(b => b.Quit(), Times.Once);
+        }
+
+        #endregion
+
+        #region Scrolling
+
+        [Fact]
+        public void VerifyScrollToBottom()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScrollToBottom());
+
+            mockBrowser.Object.ScrollToBottom();
+
+            mockBrowser.Verify(b => b.ScrollToBottom(), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyScrollToTop()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ScrollToTop());
+
+            mockBrowser.Object.ScrollToTop();
+
+            mockBrowser.Verify(b => b.ScrollToTop(), Times.Once);
+        }
+
+        #endregion
+
+        #region JavaScript
+
+        [Fact]
+        public void VerifyExecuteJavaScript()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ExecuteJavaScript(It.IsAny<string>()));
+
+            mockBrowser.Object.ExecuteJavaScript(It.IsAny<string>());
+
+            mockBrowser.Verify(b => b.ExecuteJavaScript(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyExecuteJavaScriptThatReturnsString()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("result");
+
+            string result = mockBrowser.Object.ExecuteJavaScriptThatReturns(It.IsAny<string>()).ToString();
+            result.Should().NotBeNullOrEmpty();
+            result.Should().Be("result");
+
+            mockBrowser.Verify(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>()), Times.Once);
+        }
 
 
-        // [Fact]
-        // public void ExampleMoq()
-        // {
-        //     // Arrange
-        //     //Mock<IElement> mockInput = new Mock<IElement>();
-        //     Mock<IElement> mockContainer = new Mock<IElement>();
-        //     //mockContainer.Setup(m => m.GetElement(It.IsAny<ILocator>())).Returns(mockInput.Object);
+        [Fact]
+        public void VerifyExecuteJavaScriptThatReturnsBoolTrue()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("true");
 
-        //     Mock<IBrowser> mockBrowser = new Mock<IBrowser>();
-        //     mockBrowser.Setup(b => b.GetElement(It.IsAny<ILocator>())).Returns(mockContainer.Object);
+            bool result = bool.Parse(mockBrowser.Object.ExecuteJavaScriptThatReturns(It.IsAny<string>()).ToString());
+            result.Should().BeTrue();
 
-        //     // Act
-        //     var main = mockBrowser.Object.GetElement(Locator.Id("main"));
-        //     var input = main.GetElement(Locator.Name("username"));
-        //     //input.SendKeys("testuser");
+            mockBrowser.Verify(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>()), Times.Once);
+        }
 
-        //     // Assert
-        //     //mockInput.Verify(i => i.SendKeys("testuser"), Times.Once);
-        // }
+        [Fact]
+        public void VerifyExecuteJavaScriptThatReturnsBoolFalse()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("false");
+
+            bool result = bool.Parse(mockBrowser.Object.ExecuteJavaScriptThatReturns(It.IsAny<string>()).ToString());
+            result.Should().BeFalse();
+
+            mockBrowser.Verify(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyExecuteJavaScriptThatReturnsNull()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns(null);
+
+            object result = mockBrowser.Object.ExecuteJavaScriptThatReturns(It.IsAny<string>());
+            result.Should().BeNull();
+
+            mockBrowser.Verify(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>()), Times.Once);
+        }
+
+        #endregion
+
+        #region Other Methods
+
+        [Fact]
+        public void VerifySendKeys()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.SendKeys(It.IsAny<string>()));
+
+            mockBrowser.Object.SendKeys(It.IsAny<string>());
+
+            mockBrowser.Verify(b => b.SendKeys(It.IsAny<string>()), Times.Once);
+        }
+
+        #endregion
+
+        #region Element Interaction
+
+        [Fact]
+        public void VerifyCanGetElement()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            Mock<IElement> mockElement = new();
+            mockBrowser.Setup(b => b.GetElement(It.IsAny<ILocator>())).Returns(mockElement.Object);
+
+            IElement element = mockBrowser.Object.GetElement(Locator.Id("test"));
+
+            element.Should().NotBeNull();
+            mockBrowser.Verify(b => b.GetElement(It.IsAny<ILocator>()), Times.Once);
+        }
+
+        [Fact]
+        public void VerifyCanGetElements()
+        {
+            Mock<IBrowser> mockBrowser = new();
+            Mock<IElement> mockElement = new();
+            List<IElement> mockElements = new List<IElement> { mockElement.Object };
+            mockBrowser.Setup(b => b.GetElements(It.IsAny<ILocator>())).Returns(mockElements);
+
+            List<IElement> elements = mockBrowser.Object.GetElements(Locator.Class("test"));
+
+            elements.Should().NotBeNull();
+            elements.Count.Should().Be(1);
+            mockBrowser.Verify(b => b.GetElements(It.IsAny<ILocator>()), Times.Once);
+        }
+
+        [Theory]
+        [InlineData(true, true, 0)]
+        [InlineData(false, true, 0)]
+        [InlineData(true, false, 0)]
+        [InlineData(false, false, 0)]
+        [InlineData(true, true, 5)]
+        [InlineData(true, true, 500)]
+        [InlineData(true, false, 5)]
+        [InlineData(true, false, 500)]
+        [InlineData(false, true, 5)]
+        [InlineData(false, true, 500)]
+        [InlineData(false, false, 5)]
+        [InlineData(false, false, 500)]
+        public void VerifyElementExist(bool expected, bool checkInteractable, int time)
+        {
+            TimeSpan span = time == 0 ? default : TimeSpan.FromSeconds(time);
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ElementExist(It.IsAny<ILocator>(), checkInteractable, span)).Returns(expected);
+
+            bool result = mockBrowser.Object.ElementExist(Locator.Class("test"), checkInteractable, span);
+
+            result.Should().Be(expected);
+            mockBrowser.Verify(b => b.ElementExist(It.IsAny<ILocator>(), checkInteractable, span), Times.Once);
+        }
+
+        [Theory]
+        [InlineData(true, true, 0)]
+        [InlineData(false, true, 0)]
+        [InlineData(true, false, 0)]
+        [InlineData(false, false, 0)]
+        [InlineData(true, true, 5)]
+        [InlineData(true, true, 500)]
+        [InlineData(true, false, 5)]
+        [InlineData(true, false, 500)]
+        [InlineData(false, true, 5)]
+        [InlineData(false, true, 500)]
+        [InlineData(false, false, 5)]
+        [InlineData(false, false, 500)]
+        public void VerifyElementsExist(bool expected, bool checkInteractable, int time)
+        {
+            TimeSpan span = time == 0 ? default : TimeSpan.FromSeconds(time);
+            Mock<IBrowser> mockBrowser = new();
+            mockBrowser.Setup(b => b.ElementsExist(It.IsAny<ILocator>(), checkInteractable, span)).Returns(expected);
+
+            bool result = mockBrowser.Object.ElementsExist(Locator.Class("test"), checkInteractable, span);
+
+            result.Should().Be(expected);
+            mockBrowser.Verify(b => b.ElementsExist(It.IsAny<ILocator>(), checkInteractable, span), Times.Once);
+        }
+
+        #endregion
+
     }
 }
+
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

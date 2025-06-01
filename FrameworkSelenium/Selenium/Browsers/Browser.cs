@@ -60,6 +60,9 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <inheritdoc />
         public string PageSource => _driver.PageSource;
 
+        /// <inheritdoc />
+        public string DriverType => _driverType.ToString();
+
         private Actions ActionBuilder => new(_driver);
         private IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)_driver;
 
@@ -84,7 +87,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         #region Alert Interaction
 
         /// <inheritdoc />
-        public Alerts.IAlert SwitchToAlert() => new Alert(_driver.SwitchTo().Alert());
+        public Alerts.IAlert SwitchToAlert => new Alert(_driver.SwitchTo().Alert());
 
         /// <inheritdoc />
         public void AcceptAlert() => _driver.SwitchTo().Alert().Accept();
@@ -93,17 +96,19 @@ namespace FrameworkSelenium.Selenium.Browsers
         public void DismissAlert() => _driver.SwitchTo().Alert().Dismiss();
 
         /// <inheritdoc />
-        public bool IsAlertPresent()
+        public bool IsAlertPresent
         {
-            try
+            get
             {
-                _driver.SwitchTo().Alert();
-                SwitchToDefaultContent();
-                return true;
-            }
-            catch 
-            {
-                return false;
+                try
+                {
+                    _driver.SwitchTo().Alert();
+                    return true;
+                }
+                catch (NoAlertPresentException)
+                {
+                    return false;
+                }
             }
         }
 
@@ -143,7 +148,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         public void DeleteAllCookies() => _driver.Manage().Cookies.DeleteAllCookies();
 
         /// <inheritdoc />
-        public ReadOnlyCollection<Cookie> GetAllCookies() => _driver.Manage().Cookies.AllCookies;
+        public ReadOnlyCollection<Cookie> GetAllCookies => _driver.Manage().Cookies.AllCookies;
 
         /// <inheritdoc />
         public bool DoesCookieExist(string name)
@@ -170,13 +175,10 @@ namespace FrameworkSelenium.Selenium.Browsers
         public Size WindowSize => _driver.Manage().Window.Size;
 
         /// <inheritdoc />
-        public string DriverType => _driverType.ToString();
+        public string GetCurrentWindowHandle => _driver.CurrentWindowHandle;
 
         /// <inheritdoc />
-        public string GetCurrentWindowHandle() => _driver.CurrentWindowHandle;
-
-        /// <inheritdoc />
-        public ReadOnlyCollection<string> GetAllWindowHandles() => _driver.WindowHandles;
+        public ReadOnlyCollection<string> GetAllWindowHandles => _driver.WindowHandles;
 
         /// <inheritdoc />
         public void CloseCurrentWindow() => _driver.Close();

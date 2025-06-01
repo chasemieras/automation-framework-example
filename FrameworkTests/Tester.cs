@@ -1,3 +1,4 @@
+using FrameworkSelenium;
 using FrameworkSelenium.Config;
 using FrameworkSelenium.Selenium.Browsers;
 using Xunit.Abstractions;
@@ -13,10 +14,7 @@ namespace FrameworkTests
         [Fact]
         public void Test1()
         {
-            string basePath = AppContext.BaseDirectory;
-            string path = Path.Combine(basePath, @"..\..\..\config.json"); //TODO make this work with VS Code
-            string fullPath = Path.GetFullPath(path);
-            Environment.SetEnvironmentVariable("FRAMEWORK_CONFIG", fullPath);
+            Helper.SetFrameworkConfiguration("config.json");
             
             _output.WriteLine($"{FrameworkConfiguration.Config.DriverType}\n{FrameworkConfiguration.Config.EnvironmentType}\n{FrameworkConfiguration.Config.DefaultElementTimeout}\n{FrameworkConfiguration.Config.DefaultPageTimeout}");
             Browser = new Browser();

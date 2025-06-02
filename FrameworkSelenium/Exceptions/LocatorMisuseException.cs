@@ -1,9 +1,10 @@
 ﻿using System;
+using FrameworkSelenium.Selenium.Locators;
 
 namespace FrameworkSelenium.Exceptions
 {
     /// <summary>
-    /// Throwm when a <see cref="ILocator"/> is not used correctly
+    /// Thrown when a <see cref="ILocator"/> is not used correctly
     /// </summary>
     public class LocatorMisuseException(string message) : Exception(message) //todo see if I can change this to ILocator
     {

@@ -67,7 +67,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         ///  Switches the driver to the alert
         /// </summary>
         /// <returns>an <see cref="IAlert"/></returns>
-        Alerts.IAlert SwitchToAlert();
+        Alerts.IAlert SwitchToAlert { get; }
 
         /// <summary>
         /// Automatically accepts the alert on the page
@@ -82,7 +82,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <summary>
         /// Checks if an alert is present
         /// </summary>
-        bool IsAlertPresent();
+        bool IsAlertPresent { get; }
 
         #endregion
 
@@ -91,8 +91,8 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// <summary>
         /// Switches to the frame using the given locator
         /// </summary>
-        /// <param name="locatorForFrame">Locator to the iFrame desdired</param>
-        void SwitchToFrame(Locator locatorForFrame);
+        /// <param name="locatorForFrame">Locator to the iFrame desired</param>
+        void SwitchToFrame(ILocator locatorForFrame);
 
         /// <summary>
         /// Switches to the frame using the given frame index
@@ -138,7 +138,7 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// Gets all <see cref="Cookie"/>s
         /// </summary>
         /// <returns>A ReadOnlyCollection of <see cref="Cookie"/>s</returns>
-        ReadOnlyCollection<Cookie> GetAllCookies();
+        ReadOnlyCollection<Cookie> GetAllCookies { get; }
 
         /// <summary>
         /// Checks that the given <see cref="Cookie"/> <paramref name="name"/> is present
@@ -164,13 +164,13 @@ namespace FrameworkSelenium.Selenium.Browsers
         /// Gets the current window handle
         /// </summary>
         /// <returns>A string that is the current window handle</returns>
-        string GetCurrentWindowHandle();
+        string GetCurrentWindowHandle { get; }
 
         /// <summary>
-        /// Gets all of the window hanles
+        /// Gets all of the window handles
         /// </summary>
         /// <returns>A ReadOnlyCollection of string that are the window handles</returns>
-        ReadOnlyCollection<string> GetAllWindowHandles();
+        ReadOnlyCollection<string> GetAllWindowHandles { get; }
 
         /// <summary>
         /// Closes the current tab, or window if there is only one tab

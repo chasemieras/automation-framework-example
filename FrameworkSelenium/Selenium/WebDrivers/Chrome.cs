@@ -4,12 +4,18 @@ using OpenQA.Selenium.Chrome;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public class Chrome : InterfaceDriver
+    /// <summary>
+    /// Represents a Chrome web driver implementation for Selenium
+    /// </summary>
+    public class Chrome : IDriver
     {
 
-        public  DriverOptions GenerateDriverOptions
+        /// <summary>
+        /// Generates the driver options for Chrome WebDriver
+        /// </summary>
+        public DriverOptions GenerateDriverOptions
         {
-            get 
+            get
             {
                 ChromeOptions options = new();
 
@@ -27,9 +33,14 @@ namespace FrameworkSelenium.Selenium.WebDrivers
                 //}
 
                 return options;
-            }  
+            }
         }
 
+        /// <summary>
+        /// Generates a WebDriver instance that is Chrome based on the provided options.
+        /// </summary>
+        /// <param name="options">The <see cref="DriverOptions"/> that will be used in generating the <see cref="IWebDriver"/></param>
+        /// <returns>An <see cref="IWebDriver"/></returns>
         public IWebDriver GenerateWebDriver(DriverOptions options) => new ChromeDriver(options as ChromeOptions);
     }
 }

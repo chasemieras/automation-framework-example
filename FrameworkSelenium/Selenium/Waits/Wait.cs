@@ -1,5 +1,6 @@
 ﻿using FrameworkSelenium.Exceptions;
 using FrameworkSelenium.Selenium.Elements;
+using FrameworkSelenium.Selenium.Locators;
 using OpenQA.Selenium;
 using System;
 using System.Linq;

@@ -9,7 +9,7 @@ namespace FrameworkSelenium.Config
     public static class JsonSettings
     {
         /// <summary>
-        /// Sepcific settings for <see cref="FrameworkConfiguration"/>
+        /// Specific settings for <see cref="FrameworkConfiguration"/>
         /// </summary>
         public static readonly JsonSerializerOptions FrameworkConfigSettings = new()
         {

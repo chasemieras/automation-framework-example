@@ -4,12 +4,18 @@ using OpenQA.Selenium.Edge;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
-    public class Edge : InterfaceDriver
+    /// <summary>
+    /// Represents a Edge web driver implementation for Selenium
+    /// </summary>
+    public class Edge : IDriver
     {
 
+        /// <summary>
+        /// Generates the driver options for Edge WebDriver
+        /// </summary>
         public DriverOptions GenerateDriverOptions
         {
-            get 
+            get
             {
                 EdgeOptions options = new();
 
@@ -30,6 +36,11 @@ namespace FrameworkSelenium.Selenium.WebDrivers
             }
         }
 
+        /// <summary>
+        /// Generates a WebDriver instance that is Edge based on the provided options.
+        /// </summary>
+        /// <param name="options">The <see cref="DriverOptions"/> that will be used in generating the <see cref="IWebDriver"/></param>
+        /// <returns>An <see cref="IWebDriver"/></returns>
         public IWebDriver GenerateWebDriver(DriverOptions options) => new EdgeDriver(options as EdgeOptions);
     }
 }

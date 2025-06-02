@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
+    /// <summary>
+    /// Helper class to manage the WebDriver instances
+    /// </summary>
     public static class DriverHelper
     {
         private static readonly string[] defaultOptions =
@@ -39,13 +42,19 @@ namespace FrameworkSelenium.Selenium.WebDrivers
         private static readonly ThreadLocal<IWebDriver> _driverThreadLocal = new();
         private static readonly object _lock = new();
 
+        /// <summary>
+        /// Gets the WebDriver instance for the specified <see cref="DriverType"/>.
+        /// </summary>
+        /// <param name="driverType">The <see cref="DriverType"/> that will be used</param>
+        /// <returns>An <see cref="IWebDriver"/></returns>
+        /// <exception cref="FrameworkException">Thrown if a <see cref="DriverType"/> that isn't accounted for</exception>
         public static IWebDriver GetDriver(DriverType driverType)
         {
             lock (_lock)
             {
                 if (_driverThreadLocal.Value == null)
                 {
-                    InterfaceDriver driver;
+                    IDriver driver;
                     DriverOptions options;
                     switch (driverType)
                     {
@@ -74,9 +83,12 @@ namespace FrameworkSelenium.Selenium.WebDrivers
             }
         }
 
-        public static void QuitDriver() 
+        /// <summary>
+        /// Quits the WebDriver instance for the current thread, if it exists.
+        /// </summary>
+        public static void QuitDriver()
         {
-            lock (_lock) 
+            lock (_lock)
             {
                 if (_driverThreadLocal.Value == null) return;
 

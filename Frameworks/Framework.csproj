@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<RootNamespace>FrameworkSelenium</RootNamespace>
-		<Authors></Authors>
-		<Description></Description>
+		<RootNamespace>Framework</RootNamespace>
+		<Authors>Chase Mieras</Authors>
+		<Description>Automation Framework</Description>
 		<NeutralLanguage>en</NeutralLanguage>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>

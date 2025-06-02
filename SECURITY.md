@@ -6,7 +6,8 @@ Only the latest in main will be supported. All branches and forks cannot be guar
 
 ## Reporting a Vulnerability
 
-Report all vulnerabilities to [chasemieras@gmail.com](chasemieras@gmail.com). 
+Report all vulnerabilities to [chasemieras@gmail.com](chasemieras@gmail.com).
+
 - Please make the title of the email "Automation Framework: " followed by a title of what the vulnerability is.
 - Please provide a [concise reproducible test case](http://sscce.org/) and describe what results you are seeing and what results you expect in the email.
 - Please also include your GitHub Username.

@@ -1,4 +1,5 @@
 ﻿using FrameworkSelenium.Selenium.Elements;
+using FrameworkSelenium.Selenium.Locators;
 using System;
 
 namespace FrameworkSelenium.Selenium.Waits

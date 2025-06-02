@@ -1,10 +1,9 @@
-﻿using FrameworkSelenium.Selenium.Waits;
-using System;
+﻿using System;
 
 namespace FrameworkSelenium.Exceptions
 {
     /// <summary>
-    /// Throws when the <see cref="Wait"/>s timeout
+    /// Throws when the <see cref="Selenium.Waits.Wait{TContext}"/> timeout
     /// </summary>
     /// <param name="timeout">The time that was waited</param>
     /// <param name="lastError">The most recent error from the timeout</param>

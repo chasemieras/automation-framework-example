@@ -4,12 +4,18 @@ using OpenQA.Selenium.Firefox;
 
 namespace FrameworkSelenium.Selenium.WebDrivers
 {
+    /// <summary>
+    /// Represents a Firefox web driver implementation for Selenium
+    /// </summary>
     public class Firefox : IDriver
     {
 
+        /// <summary>
+        /// Generates the driver options for Firefox WebDriver
+        /// </summary>
         public DriverOptions GenerateDriverOptions
         {
-            get 
+            get
             {
                 FirefoxOptions options = new();
 
@@ -33,6 +39,11 @@ namespace FrameworkSelenium.Selenium.WebDrivers
             }
         }
 
+        /// <summary>
+        /// Generates a WebDriver instance that is Firefox based on the provided options
+        /// </summary>
+        /// <param name="options">The <see cref="DriverOptions"/> that will be used in generating the <see cref="IWebDriver"/></param>
+        /// <returns>An <see cref="IWebDriver"/></returns>
         public IWebDriver GenerateWebDriver(DriverOptions options) => new FirefoxDriver(options as FirefoxOptions);
     }
 }

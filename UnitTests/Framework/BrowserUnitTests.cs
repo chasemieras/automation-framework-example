@@ -18,7 +18,7 @@ namespace UnitTests.Framework
     {
 
         [Fact]
-        public void VerifyBrowserIsNotNull()
+        public void Verify_BrowserIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -27,7 +27,7 @@ namespace UnitTests.Framework
         #region Variables
 
         [Fact]
-        public void VerifyPageTitleIsNotNull()
+        public void Verify_PageTitleIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -41,7 +41,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCurrentUrlIsNotNull()
+        public void Verify_CurrentUrlIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -55,7 +55,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyPageSourceIsNotNull()
+        public void Verify_PageSourceIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -69,7 +69,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDriverTypeIsNotNull()
+        public void Verify_DriverTypeIsNotNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Should().NotBeNull();
@@ -87,7 +87,7 @@ namespace UnitTests.Framework
         #region Navigation
 
         [Fact]
-        public void VerifyCanNavigate()
+        public void Verify_CanNavigate()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -99,7 +99,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCanGoBack()
+        public void Verify_CanGoBack()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -121,7 +121,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCanGoForward()
+        public void Verify_CanGoForward()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -147,7 +147,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCanRefresh()
+        public void Verify_CanRefresh()
         {
             Mock<IBrowser> mockBrowser = new();
             string testUrl = "http://example.com";
@@ -172,7 +172,7 @@ namespace UnitTests.Framework
         #region Alert Interaction
 
         [Fact]
-        public void VerifySwitchToAlertPositive()
+        public void Verify_SwitchToAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
@@ -186,7 +186,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToAlertNegative()
+        public void Verify_SwitchToAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToAlert)
@@ -199,7 +199,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyAcceptAlertPositive()
+        public void Verify_AcceptAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Object.AcceptAlert();
@@ -208,7 +208,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyAcceptAlertNegative()
+        public void Verify_AcceptAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.AcceptAlert())
@@ -221,7 +221,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDismissAlertPositive()
+        public void Verify_DismissAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Object.DismissAlert();
@@ -230,7 +230,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDismissAlertNegative()
+        public void Verify_DismissAlertNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DismissAlert())
@@ -243,7 +243,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyIsAlertPresentPositive()
+        public void Verify_IsAlertPresentPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.IsAlertPresent).Returns(true);
@@ -255,7 +255,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyIsAlertPresentNegative()
+        public void Verify_IsAlertPresentNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.IsAlertPresent).Returns(false);
@@ -271,7 +271,7 @@ namespace UnitTests.Framework
         #region iFrame Handling
 
         [Fact]
-        public void VerifySwitchToFrameLocatorPositive()
+        public void Verify_SwitchToFrameLocatorPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<ILocator>()));
@@ -282,7 +282,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToFrameLocatorNegative()
+        public void Verify_SwitchToFrameLocatorNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<ILocator>()))
@@ -295,7 +295,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToFrameIntPositive()
+        public void Verify_SwitchToFrameIntPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<int>()));
@@ -306,7 +306,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToFrameIntNegative()
+        public void Verify_SwitchToFrameIntNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToFrame(It.IsAny<int>()))
@@ -319,7 +319,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToDefaultContent()
+        public void Verify_SwitchToDefaultContent()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -328,7 +328,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToDefaultContentFromFrameLocator()
+        public void Verify_SwitchToDefaultContentFromFrameLocator()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -340,7 +340,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToDefaultContentFromFrameInt()
+        public void Verify_SwitchToDefaultContentFromFrameInt()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
@@ -352,7 +352,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToDefaultContentFromAlert()
+        public void Verify_SwitchToDefaultContentFromAlert()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
@@ -374,7 +374,7 @@ namespace UnitTests.Framework
         #region Cookie Handling
 
         [Fact]
-        public void VerifyAddCookie()
+        public void Verify_AddCookie()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.AddCookie(It.IsAny<string>(), It.IsAny<string>()));
@@ -394,7 +394,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetCookiePositive()
+        public void Verify_GetCookiePositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.GetCookie(It.IsAny<string>())).Returns(new Cookie("testCookie", "testValue"));
@@ -412,7 +412,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetCookieNull()
+        public void Verify_GetCookieNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.GetCookie(null))
@@ -423,7 +423,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetCookieNegative()
+        public void Verify_GetCookieNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.GetCookie(It.IsAny<string>())).Returns((Cookie)null);
@@ -438,7 +438,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDeleteCookie()
+        public void Verify_DeleteCookie()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DeleteCookie(It.IsAny<string>()));
@@ -451,7 +451,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDeleteCookieVerifyAfter()
+        public void Verify_DeleteCookieVerifyAfter()
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
@@ -472,7 +472,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDeleteCookieNull()
+        public void Verify_DeleteCookieNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DeleteCookie(null))
@@ -483,7 +483,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDeleteAllCookie()
+        public void Verify_DeleteAllCookie()
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
@@ -504,7 +504,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetAllCookie()
+        public void Verify_GetAllCookie()
         {
             Mock<IBrowser> mockBrowser = new();
             List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
@@ -521,7 +521,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetAllCookieEmpty()
+        public void Verify_GetAllCookieEmpty()
         {
             Mock<IBrowser> mockBrowser = new();
 
@@ -536,7 +536,7 @@ namespace UnitTests.Framework
 
 
         [Fact]
-        public void VerifyDoesCookieExistPositive()
+        public void Verify_DoesCookieExistPositive()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DoesCookieExist(It.IsAny<string>())).Returns(true);
@@ -549,7 +549,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDoesCookieExistNegative()
+        public void Verify_DoesCookieExistNegative()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DoesCookieExist(It.IsAny<string>())).Returns(false);
@@ -562,7 +562,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyDoesCookieExistNull()
+        public void Verify_DoesCookieExistNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.DoesCookieExist(null))
@@ -577,7 +577,7 @@ namespace UnitTests.Framework
         #region Window + Tab Interaction
 
         [Fact]
-        public void VerifyScreenSizeDesktop()
+        public void Verify_ScreenSizeDesktop()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -593,7 +593,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyScreenSizeMobile()
+        public void Verify_ScreenSizeMobile()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -609,7 +609,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyScreenSizeTablet()
+        public void Verify_ScreenSizeTablet()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -625,7 +625,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyScreenSizeNull()
+        public void Verify_ScreenSizeNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ScreenSize).Returns((ScreenSize)null);
@@ -637,7 +637,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyWindowSizeDesktop()
+        public void Verify_WindowSizeDesktop()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -653,7 +653,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyWindowSizeMobile()
+        public void Verify_WindowSizeMobile()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -669,7 +669,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyWindowSizeTablet()
+        public void Verify_WindowSizeTablet()
         {
             Helper.SetFrameworkConfiguration("config.json");
             Mock<IBrowser> mockBrowser = new();
@@ -685,7 +685,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyWindowSizeNull()
+        public void Verify_WindowSizeNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.WindowSize).Returns(null);
@@ -699,7 +699,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetCurrentWindowHandle()
+        public void Verify_GetCurrentWindowHandle()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.GetCurrentWindowHandle).Returns("currentWindowHandle123");
@@ -712,7 +712,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetAllWindowHandlesSingle()
+        public void Verify_GetAllWindowHandlesSingle()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "windowHandle1" };
@@ -729,7 +729,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetAllWindowHandlesMultiple()
+        public void Verify_GetAllWindowHandlesMultiple()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "windowHandle1", "windowHandle2", "windowHandle3" };
@@ -749,7 +749,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyGetAllWindowHandlesEmpty()
+        public void Verify_GetAllWindowHandlesEmpty()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string>();
@@ -765,7 +765,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCloseCurrentWindowSingle()
+        public void Verify_CloseCurrentWindowSingle()
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
@@ -789,7 +789,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCloseCurrentWindowMultiple()
+        public void Verify_CloseCurrentWindowMultiple()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "window1", "window2" };
@@ -812,7 +812,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToWindow()
+        public void Verify_SwitchToWindow()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "window1", "window2" };
@@ -839,7 +839,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToNewWindow()
+        public void Verify_SwitchToNewWindow()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "window1" };
@@ -869,7 +869,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifySwitchToNewTab()
+        public void Verify_SwitchToNewTab()
         {
             Mock<IBrowser> mockBrowser = new();
             List<string> handles = new List<string> { "tab1" };
@@ -898,7 +898,7 @@ namespace UnitTests.Framework
             mockBrowser.Verify(b => b.SwitchToNewTab(), Times.Once);
         }
         [Fact]
-        public void VerifyQuit()
+        public void Verify_Quit()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.Quit());
@@ -913,7 +913,7 @@ namespace UnitTests.Framework
         #region Scrolling
 
         [Fact]
-        public void VerifyScrollToBottom()
+        public void Verify_ScrollToBottom()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ScrollToBottom());
@@ -924,7 +924,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyScrollToTop()
+        public void Verify_ScrollToTop()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ScrollToTop());
@@ -939,7 +939,7 @@ namespace UnitTests.Framework
         #region JavaScript
 
         [Fact]
-        public void VerifyExecuteJavaScript()
+        public void Verify_ExecuteJavaScript()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ExecuteJavaScript(It.IsAny<string>()));
@@ -950,7 +950,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyExecuteJavaScriptThatReturnsString()
+        public void Verify_ExecuteJavaScriptThatReturnsString()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("result");
@@ -964,7 +964,7 @@ namespace UnitTests.Framework
 
 
         [Fact]
-        public void VerifyExecuteJavaScriptThatReturnsBoolTrue()
+        public void Verify_ExecuteJavaScriptThatReturnsBoolTrue()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("true");
@@ -976,7 +976,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyExecuteJavaScriptThatReturnsBoolFalse()
+        public void Verify_ExecuteJavaScriptThatReturnsBoolFalse()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns("false");
@@ -988,7 +988,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyExecuteJavaScriptThatReturnsNull()
+        public void Verify_ExecuteJavaScriptThatReturnsNull()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.ExecuteJavaScriptThatReturns(It.IsAny<string>())).Returns(null);
@@ -1004,7 +1004,7 @@ namespace UnitTests.Framework
         #region Other Methods
 
         [Fact]
-        public void VerifySendKeys()
+        public void Verify_SendKeys()
         {
             Mock<IBrowser> mockBrowser = new();
             mockBrowser.Setup(b => b.SendKeys(It.IsAny<string>()));
@@ -1019,7 +1019,7 @@ namespace UnitTests.Framework
         #region Element Interaction
 
         [Fact]
-        public void VerifyCanGetElement()
+        public void Verify_CanGetElement()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<IElement> mockElement = new();
@@ -1032,7 +1032,7 @@ namespace UnitTests.Framework
         }
 
         [Fact]
-        public void VerifyCanGetElements()
+        public void Verify_CanGetElements()
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<IElement> mockElement = new();
@@ -1059,7 +1059,7 @@ namespace UnitTests.Framework
         [InlineData(false, true, 500)]
         [InlineData(false, false, 5)]
         [InlineData(false, false, 500)]
-        public void VerifyElementExist(bool expected, bool checkInteractable, int time)
+        public void Verify_ElementExist(bool expected, bool checkInteractable, int time)
         {
             TimeSpan span = time == 0 ? default : TimeSpan.FromSeconds(time);
             Mock<IBrowser> mockBrowser = new();
@@ -1084,7 +1084,7 @@ namespace UnitTests.Framework
         [InlineData(false, true, 500)]
         [InlineData(false, false, 5)]
         [InlineData(false, false, 500)]
-        public void VerifyElementsExist(bool expected, bool checkInteractable, int time)
+        public void Verify_ElementsExist(bool expected, bool checkInteractable, int time)
         {
             TimeSpan span = time == 0 ? default : TimeSpan.FromSeconds(time);
             Mock<IBrowser> mockBrowser = new();

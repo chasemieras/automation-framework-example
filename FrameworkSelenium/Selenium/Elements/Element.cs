@@ -1,4 +1,5 @@
 ﻿using FrameworkSelenium.Exceptions;
+using FrameworkSelenium.Selenium.Locators;
 using FrameworkSelenium.Selenium.Waits;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;

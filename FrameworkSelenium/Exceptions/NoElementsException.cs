@@ -1,4 +1,5 @@
 ﻿using System;
+using FrameworkSelenium.Selenium.Locators;
 
 namespace FrameworkSelenium.Exceptions
 {

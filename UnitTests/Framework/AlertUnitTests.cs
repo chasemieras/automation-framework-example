@@ -1,7 +1,6 @@
 using Moq;
-using FrameworkSelenium.Selenium.Alerts;
-using FrameworkSelenium.Selenium.Browsers;
 using FluentAssertions;
+using AutomationFramework.Framework;
 
 namespace UnitTests.Framework
 {
@@ -63,9 +62,9 @@ namespace UnitTests.Framework
             [Fact]
             public void Accept()
             {
-                Mock<IAlert> alertMock = new Mock<IAlert>();
+                Mock<IAlert> alertMock = new();
                 alertMock.Setup(a => a.Accept());
-                Mock<IBrowser> browserMock = new Mock<IBrowser>();
+                Mock<IBrowser> browserMock = new();
                 browserMock.Setup(b => b.SwitchToAlert).Returns(alertMock.Object);
 
                 IAlert alert = browserMock.Object.SwitchToAlert;
@@ -77,9 +76,9 @@ namespace UnitTests.Framework
             [Fact]
             public void Dismiss()
             {
-                Mock<IAlert> alertMock = new Mock<IAlert>();
+                Mock<IAlert> alertMock = new();
                 alertMock.Setup(a => a.Dismiss());
-                Mock<IBrowser> browserMock = new Mock<IBrowser>();
+                Mock<IBrowser> browserMock = new();
                 browserMock.Setup(b => b.SwitchToAlert).Returns(alertMock.Object);
 
                 IAlert alert = browserMock.Object.SwitchToAlert;
@@ -91,9 +90,9 @@ namespace UnitTests.Framework
             [Fact]
             public void GetText()
             {
-                Mock<IAlert> alertMock = new Mock<IAlert>();
+                Mock<IAlert> alertMock = new();
                 alertMock.Setup(a => a.GetText()).Returns("Alert text");
-                Mock<IBrowser> browserMock = new Mock<IBrowser>();
+                Mock<IBrowser> browserMock = new();
                 browserMock.Setup(b => b.SwitchToAlert).Returns(alertMock.Object);
 
                 IAlert alert = browserMock.Object.SwitchToAlert;
@@ -105,9 +104,9 @@ namespace UnitTests.Framework
             [Fact]
             public void SendKeys()
             {
-                Mock<IAlert> alertMock = new Mock<IAlert>();
+                Mock<IAlert> alertMock = new();
                 alertMock.Setup(a => a.SendKeys(It.IsAny<string>()));
-                Mock<IBrowser> browserMock = new Mock<IBrowser>();
+                Mock<IBrowser> browserMock = new();
                 browserMock.Setup(b => b.SwitchToAlert).Returns(alertMock.Object);
 
                 IAlert alert = browserMock.Object.SwitchToAlert;

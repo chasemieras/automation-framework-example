@@ -1,6 +1,7 @@
-using FrameworkSelenium;
-using FrameworkSelenium.Config;
-using FrameworkSelenium.Selenium.Browsers;
+using AutomationFramework;
+using AutomationFramework.Config;
+using AutomationFramework.Framework;
+using AutomationFramework.Selenium;
 using Xunit.Abstractions;
 
 namespace FrameworkTests

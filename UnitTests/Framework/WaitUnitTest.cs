@@ -4,7 +4,7 @@ using FrameworkSelenium.Selenium.Locators;
 using FrameworkSelenium.Selenium.Browsers;
 using FrameworkSelenium.Selenium.Waits;
 
-namespace UnitTests
+namespace UnitTests.Framework
 {
     public class WaitUnitTests
     {

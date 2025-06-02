@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
 using FrameworkSelenium;
 using FrameworkSelenium.Config;
-using FrameworkSelenium.Exceptions;
 using System.Reflection;
 using System.Text.Json;
 using Xunit.Abstractions;
 
-namespace UnitTests
+namespace UnitTests.Framework
 {
     public class FrameworkConfigurationUnitTests(ITestOutputHelper output)
     {

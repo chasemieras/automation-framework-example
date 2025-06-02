@@ -12,7 +12,7 @@ using FrameworkSelenium;
 using System.Drawing;
 using FrameworkSelenium.Selenium.Elements;
 
-namespace UnitTests
+namespace UnitTests.Framework
 {
     public class BrowserUnitTests
     {

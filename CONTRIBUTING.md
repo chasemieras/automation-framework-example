@@ -17,4 +17,4 @@ We’re especially interested in contributions that add support for **other prog
 
 ---
 
-If you have any questions, feel free to open an issue or start a discussion.
+If you have any questions, feel free to open an issue.

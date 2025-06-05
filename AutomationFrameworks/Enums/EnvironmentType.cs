@@ -13,6 +13,11 @@
         /// <summary>
         /// On a CI/CD pipeline on GitLabs or Azure DevOps
         /// </summary>
-        Remote
+        Remote,
+
+        /// <summary>
+        /// Running on Selenium Grid
+        /// </summary>
+        Grid
     }
 }

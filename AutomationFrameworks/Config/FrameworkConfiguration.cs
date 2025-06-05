@@ -54,9 +54,14 @@ namespace AutomationFramework.Config
 
             DriverType = config.DriverType;
             EnvironmentType = config.EnvironmentType;
+            if (EnvironmentType is not EnvironmentType.Local)
+                HeadlessMode = true;
+            else
+                HeadlessMode = false;
+
             DefaultElementTimeout = TimeSpan.FromSeconds(config.DefaultElementTimeout);
             DefaultPageTimeout = TimeSpan.FromSeconds(config.DefaultPageTimeout);
-            HeadlessMode = false;
+            EmulatedDevice = null;
 
             DesktopHeight = config.DesktopHeight;
             DesktopWidth = config.DesktopWidth;
@@ -97,6 +102,11 @@ namespace AutomationFramework.Config
         public bool HeadlessMode { get; set; }
 
         /// <summary>
+        /// The emulated device that will be used during testing
+        /// </summary>
+        public EmulatedDevice EmulatedDevice { get; set; }
+
+        /// <summary>
         /// The height of desktop mode
         /// </summary>
         public int DesktopHeight { get; }
@@ -109,21 +119,21 @@ namespace AutomationFramework.Config
         /// <summary>
         /// The height of the mobile screen size in pixels
         /// </summary>
-        public int MobileHeight { get; }
+        public int MobileHeight { get; set; }
 
         /// <summary>
         /// The width of the mobile screen size in pixels
         /// </summary>
-        public int MobileWidth { get; }
+        public int MobileWidth { get; set; }
 
         /// <summary>
         /// The height of the tablet screen size in pixels
         /// </summary>
-        public int TabletHeight { get; }
+        public int TabletHeight { get; set; }
 
         /// <summary>
         /// The width of the tablet screen size in pixels
         /// </summary>
-        public int TabletWidth { get; }
+        public int TabletWidth { get; set; }
     }
 }

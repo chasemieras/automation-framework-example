@@ -1,6 +1,9 @@
-﻿using AutomationFramework.Config;
+﻿using System;
+using AutomationFramework.Config;
+using AutomationFramework.Exceptions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools.V135.Page;
 
 namespace AutomationFramework.Selenium.WebDrivers
 {
@@ -22,15 +25,34 @@ namespace AutomationFramework.Selenium.WebDrivers
                 if (FrameworkConfiguration.Config.HeadlessMode)
                     options.AddArgument("--headless");
 
-                //switch (FrameworkConfiguration.Config.ScreenSize.Type)
-                //{
-                //    case ScreenSize.SizeType.Mobile:
-                //        options.EnableMobileEmulation();
-                //        break;
-                //    case ScreenSize.SizeType.Tablet:
-                //        options.EnableMobileEmulation();
-                //        break;
-                //}
+                if (FrameworkConfiguration.Config.ScreenSize is not null && FrameworkConfiguration.Config.ScreenSize.Type is not ScreenSize.SizeType.Desktop)
+                {
+                    DeviceOperatingSystem system;
+                    if (new Random().Next(0, 2) == 0)
+                        system = DeviceOperatingSystem.Android;
+                    else
+                        system = DeviceOperatingSystem.Apple;
+                    EmulatedDevice device;
+
+                    switch (FrameworkConfiguration.Config.ScreenSize.Type)
+                    {
+                        case ScreenSize.SizeType.Mobile:
+                            device = EmulatedDevices.GetRandomDevice(system, DeviceType.Tablet);
+                            FrameworkConfiguration.Config.MobileHeight = device.Height;
+                            FrameworkConfiguration.Config.MobileWidth = device.Width;
+                            break;
+                        case ScreenSize.SizeType.Tablet:
+                            device = EmulatedDevices.GetRandomDevice(system, DeviceType.Tablet);
+                            FrameworkConfiguration.Config.TabletHeight = device.Height;
+                            FrameworkConfiguration.Config.TabletWidth = device.Width;
+                            break;
+                        default:
+                            throw new FrameworkConfigurationException($"Unsupported screen size type: {FrameworkConfiguration.Config.ScreenSize.Type}");
+                    }
+
+                    options.EnableMobileEmulation(device.Name);
+                    FrameworkConfiguration.Config.EmulatedDevice = device;
+                }
 
                 return options;
             }

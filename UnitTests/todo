@@ -1,7 +1,0 @@
-todo add more tests with moq
-todo add workflow on github to run unit tests after a PR is merged
-todo add README
-todo add docker compose of grid
-todo add xunit test runner
-todo make attributes that set the size
-todo look at Relative Locators

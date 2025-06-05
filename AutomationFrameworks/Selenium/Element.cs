@@ -22,8 +22,6 @@ namespace AutomationFramework.Selenium
         private readonly IWebElement _element = element;
         private readonly IWebDriver _driver = driver;
 
-        //todo look for NotImplementedException and implement them!
-
         #region Variables
 
         private Actions ActionBuilder => new(_driver);

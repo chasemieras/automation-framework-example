@@ -26,7 +26,7 @@ namespace AutomationFramework.Selenium
         /// <summary>
         /// Creates a <see cref="IBrowser"/>, which spins up a <see cref="IWebDriver"/> instance
         /// </summary>
-        public Browser() 
+        internal Browser()
         {
             Environment.SetEnvironmentVariable("SE_AVOID_STATS", "true");
             Environment.SetEnvironmentVariable("SE_CLEAR_CACHE", "true");
@@ -157,8 +157,8 @@ namespace AutomationFramework.Selenium
                 GetCookie(name);
                 return true;
             }
-            catch 
-            { 
+            catch
+            {
                 return false;
             }
         }
@@ -208,7 +208,7 @@ namespace AutomationFramework.Selenium
         /// Used by <see cref="ScrollToTop"/> and <see cref="ScrollToBottom"/> to scroll
         /// </summary>
         /// <param name="key">The <see cref="Keys"/> that does a scroll action</param>
-        private void PerformScroll(string key) 
+        private void PerformScroll(string key)
         {
             ActionBuilder.SendKeys(key).Build().Perform();
             System.Threading.Thread.Sleep(500);
@@ -233,11 +233,7 @@ namespace AutomationFramework.Selenium
             ActionBuilder.SendKeys(keys).Build().Perform();
 
         /// <inheritdoc />
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose();
-        }
+        public void Dispose() => Quit();
 
         #endregion
 
@@ -267,7 +263,7 @@ namespace AutomationFramework.Selenium
             List<IElement> list = [];
             foreach (IWebElement elem in elements)
                 list.Add(new Element(elem, _driver));
-            
+
             return list;
         }
 
@@ -299,7 +295,7 @@ namespace AutomationFramework.Selenium
                 result = true;
                 return result;
             });
-            
+
             return result;
         }
 

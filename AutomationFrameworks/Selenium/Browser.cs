@@ -233,6 +233,10 @@ namespace AutomationFramework.Selenium
             ActionBuilder.SendKeys(keys).Build().Perform();
 
         /// <inheritdoc />
+        public string ScreenShot =>
+            ((ITakesScreenshot)_driver).GetScreenshot().AsBase64EncodedString;
+
+        /// <inheritdoc />
         public void Dispose() => Quit();
 
         #endregion

@@ -239,6 +239,11 @@ namespace AutomationFramework.Framework
         /// <param name="keys">specific text or <see cref="Keys"/></param>
         void SendKeys(string keys);
             
+        /// <summary>
+        /// Takes a screenshot of the current page
+        /// </summary>
+        string ScreenShot { get; }
+
         #endregion
 
     }

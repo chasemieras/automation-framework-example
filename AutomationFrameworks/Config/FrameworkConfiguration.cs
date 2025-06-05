@@ -7,8 +7,6 @@ using System.Threading;
 
 namespace AutomationFramework.Config
 {
-    //TODO lock down the variables once setup of other parts of the framework is complete
-
     /// <summary>
     /// Sets up important variables that will be used during testing
     /// </summary>
@@ -74,22 +72,22 @@ namespace AutomationFramework.Config
         /// <summary>
         /// The type of driver that is used during testing
         /// </summary>
-        public DriverType DriverType { get; set; }
+        public DriverType DriverType { get; }
 
         /// <summary>
         /// The type of environment that the tests are run in
         /// </summary>
-        public EnvironmentType EnvironmentType { get; set; }
+        public EnvironmentType EnvironmentType { get; }
 
         /// <summary>
         /// The default timeout for elements in seconds
         /// </summary>
-        public TimeSpan DefaultElementTimeout { get; set; }
+        public TimeSpan DefaultElementTimeout { get; }
 
         /// <summary>
         /// The default timeout for pages in seconds
         /// </summary>
-        public TimeSpan DefaultPageTimeout { get; set; }
+        public TimeSpan DefaultPageTimeout { get; }
 
         /// <summary>
         /// The <see cref="ScreenSize"/> that the tests will run in
@@ -104,7 +102,7 @@ namespace AutomationFramework.Config
         /// <summary>
         /// The emulated device that will be used during testing
         /// </summary>
-        public EmulatedDevice EmulatedDevice { get; set; }
+        public EmulatedDevice EmulatedDevice { get; set;  }
 
         /// <summary>
         /// The height of desktop mode

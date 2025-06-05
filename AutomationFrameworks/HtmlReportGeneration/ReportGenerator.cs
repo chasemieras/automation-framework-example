@@ -64,21 +64,21 @@ namespace AutomationFramework.HtmlReportGeneration
             if (!Directory.Exists(resultsPath))
                 Directory.CreateDirectory(resultsPath);
 
-            string reportName;
+            string reportName = "Local Testing";
             string fileName = "index";
             try
             {
-                reportName = Environment.GetEnvironmentVariable("REPORT_NAME");
+                string tmp = Environment.GetEnvironmentVariable("REPORT_NAME");
+                if (!string.IsNullOrEmpty(tmp))
+                    reportName = tmp;
             }
             catch
             {
-                reportName = "Local Testing";
+                //
             }
 
-            if (!string.IsNullOrEmpty(reportName))
+            if (string.IsNullOrEmpty(reportName))
                 fileName = reportName;
-
-            //reportName = reportName.Replace('_', ' ');
 
             ExtentReports extentReports = new();
             ExtentSparkReporter htmlReport = new($"{resultsPath}/{fileName}.html")
@@ -86,7 +86,7 @@ namespace AutomationFramework.HtmlReportGeneration
                 Config =
                 {
                     DocumentTitle = reportName,
-                    ReportName = fileName,
+                    ReportName = reportName,
                     Theme = Theme.Dark,
                     TimelineEnabled = true
                 }

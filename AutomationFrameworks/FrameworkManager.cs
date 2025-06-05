@@ -91,15 +91,15 @@ namespace AutomationFramework
                     GenerateTestNode(Context.UniqueTestName, "No Author Assigned");
                     error = true;
                 }
-                HtmlReport.AssignDevice(); //todo Emulated Device + Screen Size
-                HtmlReport.AssignDevice(); //todo Driver + OS
+                
+                HtmlReport.AssignDevice($"{(FrameworkConfiguration.Config.EmulatedDevice != null ?
+                $"{FrameworkConfiguration.Config.EmulatedDevice.Name} | " : "")}{FrameworkConfiguration.Config.ScreenSize.Type}");
+                HtmlReport.AssignDevice($"{Browser.DriverType}");
 
                 Exception lastLoggedException = Context.TestException;
 
                 if (lastLoggedException is not null)
-                {
-                    //todo add logging of exception
-                }
+                    HtmlReport.ExceptionWithScreenShot(Browser, lastLoggedException);
 
                 HtmlReport.Info($"<b>Test Duration:</b> {_sw.Elapsed}");
 

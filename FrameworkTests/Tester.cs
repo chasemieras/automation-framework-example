@@ -9,6 +9,10 @@ namespace FrameworkTests
     {
         public override string TestClassName => "egg";
 
+        //todo add docker compose of grid
+        //todo look at Relative Locators
+        //todo make it so browser type can change per run if wanted
+
         [Mobile]
         [Fact]
         public void Test1()

@@ -64,37 +64,33 @@ namespace AutomationFramework
     /// </summary>
     public static class EmulatedDevices
     {
-        private static readonly List<EmulatedDevice> AppleTablets = new()
-        {
-            new EmulatedDevice("iPad Pro 12.9", 2048, 2732),
-            new EmulatedDevice("iPad Air", 1640, 2360),
-            new EmulatedDevice("iPad Mini", 1536, 2048),
-            new EmulatedDevice("iPad 10.2", 1620, 2160)
-        };
+        private static readonly List<EmulatedDevice> AppleTablets =
+        [
+            new EmulatedDevice("iPad Pro", 1024, 1366),
+            new EmulatedDevice("iPad Air", 820, 1180),
+            new EmulatedDevice("iPad Mini", 768, 1024),
+        ];
 
-        private static readonly List<EmulatedDevice> AppleMobiles = new()
-        {
-            new EmulatedDevice("iPhone 14 Pro Max", 1290, 2796),
-            new EmulatedDevice("iPhone 13", 1170, 2532),
-            new EmulatedDevice("iPhone SE", 750, 1334),
-            new EmulatedDevice("iPhone 12 Mini", 1080, 2340)
-        };
+        private static readonly List<EmulatedDevice> AppleMobiles =
+        [
+            new EmulatedDevice("iPhone 14 Pro Max", 430, 932),
+            new EmulatedDevice("iPhone 12 Pro", 390, 844),
+            new EmulatedDevice("iPhone SE", 375, 667),
+            new EmulatedDevice("iPhone XR", 414, 869)
+        ];
 
-        private static readonly List<EmulatedDevice> AndroidTablets = new()
-        {
-            new EmulatedDevice("Samsung Galaxy Tab S8", 1752, 2800),
-            new EmulatedDevice("Lenovo Tab P11", 1200, 2000),
-            new EmulatedDevice("Amazon Fire HD 10", 1200, 1920),
-            new EmulatedDevice("Huawei MatePad Pro", 1600, 2560)
-        };
+        private static readonly List<EmulatedDevice> AndroidTablets =
+        [
+            new EmulatedDevice("Galaxy Tab S4", 712, 1138),
+            new EmulatedDevice("Fire HDX", 800, 1280)
+        ];
 
-        private static readonly List<EmulatedDevice> AndroidMobiles = new()
-        {
-            new EmulatedDevice("Samsung Galaxy S23 Ultra", 1440, 3088),
-            new EmulatedDevice("Google Pixel 7", 1080, 2400),
-            new EmulatedDevice("OnePlus 11", 1440, 3216),
-            new EmulatedDevice("Xiaomi Mi 11", 1440, 3200)
-        };
+        private static readonly List<EmulatedDevice> AndroidMobiles =
+        [
+            new EmulatedDevice("Samsung Galaxy S2 Ultra", 412, 915),
+            new EmulatedDevice("Pixel 7", 412, 915),
+            new EmulatedDevice("Samsung Galaxy S8+", 360, 740),
+        ];
 
 
         /// <summary>

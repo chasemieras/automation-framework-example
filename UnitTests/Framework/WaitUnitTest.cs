@@ -1,8 +1,7 @@
 using Moq;
-using FrameworkSelenium.Selenium.Elements;
-using FrameworkSelenium.Selenium.Locators;
-using FrameworkSelenium.Selenium.Browsers;
-using FrameworkSelenium.Selenium.Waits;
+using AutomationFramework.Selenium.Locators;
+using AutomationFramework.Framework;
+using AutomationFramework.Framework.Waits;
 
 namespace UnitTests.Framework
 {

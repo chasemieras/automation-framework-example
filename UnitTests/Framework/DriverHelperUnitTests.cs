@@ -1,11 +1,9 @@
 using OpenQA.Selenium;
-using FrameworkSelenium.Enums;
-using FrameworkSelenium.Selenium.WebDrivers;
-using FrameworkSelenium.Exceptions;
-using System.Reflection;
 using FluentAssertions;
 using Moq;
-using FrameworkSelenium;
+using AutomationFramework.Exceptions;
+using AutomationFramework.Enums;
+using AutomationFramework.Selenium.WebDrivers;
 
 namespace UnitTests.Framework
 {

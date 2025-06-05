@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
-using FrameworkSelenium;
-using FrameworkSelenium.Config;
+﻿using AutomationFramework;
+using AutomationFramework.Config;
+using FluentAssertions;
 using System.Reflection;
 using System.Text.Json;
 using Xunit.Abstractions;

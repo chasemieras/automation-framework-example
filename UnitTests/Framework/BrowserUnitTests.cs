@@ -4,13 +4,12 @@
 
 using Moq;
 using OpenQA.Selenium;
-using FrameworkSelenium.Selenium.Browsers;
-using FrameworkSelenium.Selenium.Locators;
 using FluentAssertions;
 using System.Collections.ObjectModel;
-using FrameworkSelenium;
 using System.Drawing;
-using FrameworkSelenium.Selenium.Elements;
+using AutomationFramework.Selenium.Locators;
+using AutomationFramework;
+using AutomationFramework.Framework;
 
 namespace UnitTests.Framework
 {
@@ -175,10 +174,10 @@ namespace UnitTests.Framework
         public void Verify_SwitchToAlertPositive()
         {
             Mock<IBrowser> mockBrowser = new();
-            Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
+            Mock<AutomationFramework.Framework.IAlert> mockAlert = new();
             mockBrowser.Setup(b => b.SwitchToAlert).Returns(mockAlert.Object);
 
-            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert;
+            AutomationFramework.Framework.IAlert alert = mockBrowser.Object.SwitchToAlert;
             alert.Should().NotBeNull();
             alert.Should().Be(mockAlert.Object);
 
@@ -192,7 +191,7 @@ namespace UnitTests.Framework
             mockBrowser.Setup(b => b.SwitchToAlert)
                         .Throws(new NoAlertPresentException("Alert not found"));
 
-            Action act = () => { FrameworkSelenium.Selenium.Alerts.IAlert _ = mockBrowser.Object.SwitchToAlert; };
+            Action act = () => { AutomationFramework.Framework.IAlert _ = mockBrowser.Object.SwitchToAlert; };
             act.Should().Throw<NoAlertPresentException>().WithMessage("Alert not found");
 
             mockBrowser.Verify(b => b.SwitchToAlert, Times.Once);
@@ -355,12 +354,12 @@ namespace UnitTests.Framework
         public void Verify_SwitchToDefaultContentFromAlert()
         {
             Mock<IBrowser> mockBrowser = new();
-            Mock<FrameworkSelenium.Selenium.Alerts.IAlert> mockAlert = new();
+            Mock<AutomationFramework.Framework.IAlert> mockAlert = new();
 
             mockBrowser.Setup(b => b.SwitchToDefaultContent());
             mockBrowser.Setup(b => b.SwitchToAlert).Returns(mockAlert.Object);
 
-            FrameworkSelenium.Selenium.Alerts.IAlert alert = mockBrowser.Object.SwitchToAlert;
+            AutomationFramework.Framework.IAlert alert = mockBrowser.Object.SwitchToAlert;
             alert.Should().NotBeNull();
             alert.Should().Be(mockAlert.Object);
 
@@ -455,7 +454,7 @@ namespace UnitTests.Framework
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
+            List<Cookie> cookieList = [new("testCookie", "testValue")];
 
             mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
@@ -487,7 +486,7 @@ namespace UnitTests.Framework
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
+            List<Cookie> cookieList = [new("testCookie", "testValue")];
 
             mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
@@ -507,7 +506,7 @@ namespace UnitTests.Framework
         public void Verify_GetAllCookie()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<Cookie> cookieList = new List<Cookie> { new("testCookie", "testValue") };
+            List<Cookie> cookieList = [new("testCookie", "testValue")];
 
             mockBrowser.Setup(b => b.GetAllCookies)
                 .Returns(() => new ReadOnlyCollection<Cookie>(cookieList));
@@ -526,7 +525,7 @@ namespace UnitTests.Framework
             Mock<IBrowser> mockBrowser = new();
 
             mockBrowser.Setup(b => b.GetAllCookies)
-                .Returns(() => new ReadOnlyCollection<Cookie>(new List<Cookie>()));
+                .Returns(() => new ReadOnlyCollection<Cookie>([]));
 
             ReadOnlyCollection<Cookie> cookieJar = mockBrowser.Object.GetAllCookies;
             cookieJar.Should().HaveCount(0);
@@ -715,7 +714,7 @@ namespace UnitTests.Framework
         public void Verify_GetAllWindowHandlesSingle()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "windowHandle1" };
+            List<string> handles = ["windowHandle1"];
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
                 .Returns(() => new ReadOnlyCollection<string>(handles));
@@ -732,7 +731,7 @@ namespace UnitTests.Framework
         public void Verify_GetAllWindowHandlesMultiple()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "windowHandle1", "windowHandle2", "windowHandle3" };
+            List<string> handles = ["windowHandle1", "windowHandle2", "windowHandle3"];
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
                 .Returns(() => new ReadOnlyCollection<string>(handles));
@@ -752,7 +751,7 @@ namespace UnitTests.Framework
         public void Verify_GetAllWindowHandlesEmpty()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string>();
+            List<string> handles = [];
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
                 .Returns(() => new ReadOnlyCollection<string>(handles));
@@ -769,7 +768,7 @@ namespace UnitTests.Framework
         {
             // Arrange
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "window1" };
+            List<string> handles = ["window1"];
             mockBrowser.Setup(b => b.GetAllWindowHandles)
                 .Returns(() => new ReadOnlyCollection<string>(handles));
             mockBrowser.Setup(b => b.CloseCurrentWindow())
@@ -792,7 +791,7 @@ namespace UnitTests.Framework
         public void Verify_CloseCurrentWindowMultiple()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "window1", "window2" };
+            List<string> handles = ["window1", "window2"];
             mockBrowser.Setup(b => b.GetAllWindowHandles)
                 .Returns(() => new ReadOnlyCollection<string>(handles));
             mockBrowser.Setup(b => b.CloseCurrentWindow())
@@ -815,7 +814,7 @@ namespace UnitTests.Framework
         public void Verify_SwitchToWindow()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "window1", "window2" };
+            List<string> handles = ["window1", "window2"];
             string currentHandle = "window1";
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
@@ -842,7 +841,7 @@ namespace UnitTests.Framework
         public void Verify_SwitchToNewWindow()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "window1" };
+            List<string> handles = ["window1"];
             string currentHandle = "window1";
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
@@ -872,7 +871,7 @@ namespace UnitTests.Framework
         public void Verify_SwitchToNewTab()
         {
             Mock<IBrowser> mockBrowser = new();
-            List<string> handles = new List<string> { "tab1" };
+            List<string> handles = ["tab1"];
             string currentHandle = "tab1";
 
             mockBrowser.Setup(b => b.GetAllWindowHandles)
@@ -1036,7 +1035,7 @@ namespace UnitTests.Framework
         {
             Mock<IBrowser> mockBrowser = new();
             Mock<IElement> mockElement = new();
-            List<IElement> mockElements = new List<IElement> { mockElement.Object };
+            List<IElement> mockElements = [mockElement.Object];
             mockBrowser.Setup(b => b.GetElements(It.IsAny<ILocator>())).Returns(mockElements);
 
             List<IElement> elements = mockBrowser.Object.GetElements(Locator.Class("test"));

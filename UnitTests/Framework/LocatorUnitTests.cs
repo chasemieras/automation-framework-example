@@ -1,8 +1,7 @@
-using Xunit;
 using FluentAssertions;
-using FrameworkSelenium.Selenium.Locators;
-using FrameworkSelenium.Enums;
 using OpenQA.Selenium;
+using AutomationFramework.Selenium.Locators;
+using AutomationFramework.Enums;
 
 namespace UnitTests.Framework
 {

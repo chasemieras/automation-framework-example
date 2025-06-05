@@ -1,8 +1,8 @@
 using Moq;
 using FluentAssertions;
 using System.Drawing;
-using FrameworkSelenium.Selenium.Elements;
-using FrameworkSelenium.Selenium.Locators;
+using AutomationFramework.Selenium.Locators;
+using AutomationFramework.Framework;
 
 namespace UnitTests.Framework
 {
@@ -398,7 +398,7 @@ namespace UnitTests.Framework
         {
             Mock<IElement> mockElement = new();
             Mock<IElement> mockChild = new();
-            List<IElement> mockChildren = new() { mockChild.Object };
+            List<IElement> mockChildren = [mockChild.Object];
             mockElement.Setup(e => e.GetElements(It.IsAny<ILocator>())).Returns(mockChildren);
 
             List<IElement> children = mockElement.Object.GetElements(Locator.Class("test"));

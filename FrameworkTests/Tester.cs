@@ -1,24 +1,24 @@
-using FrameworkSelenium;
-using FrameworkSelenium.Config;
-using FrameworkSelenium.Selenium.Browsers;
+using AutomationFramework;
+using AutomationFramework.Attributes;
+using AutomationFramework.Config;
 using Xunit.Abstractions;
 
 namespace FrameworkTests
 {
-    public class Tester(ITestOutputHelper output)
+    public class Tester(ITestOutputHelper output, ReportFixture report) : AbstractTestCase(output, report), IClassFixture<ReportFixture>
     {
-        private IBrowser Browser { get; set; }
+        public override string TestClassName => "egg";
 
-        private readonly ITestOutputHelper _output = output;
+        //todo add docker compose of grid
+        //todo look at Relative Locators
+        //todo make it so browser type can change per run if wanted
 
+        [Mobile]
         [Fact]
         public void Test1()
         {
-            Helper.SetFrameworkConfiguration("config.json");
-            
-            _output.WriteLine($"{FrameworkConfiguration.Config.DriverType}\n{FrameworkConfiguration.Config.EnvironmentType}\n{FrameworkConfiguration.Config.DefaultElementTimeout}\n{FrameworkConfiguration.Config.DefaultPageTimeout}");
-            Browser = new Browser();
-            _output.WriteLine($"{Browser.CurrentUrl}");
+            GenerateTestNode("test", "test");
+            HtmlReport.Info($"{FrameworkConfiguration.Config.ScreenSize.Type}<br>{Browser.WindowSize.Width}x{Browser.WindowSize.Height}<br>{Browser.ScreenSize.Type}");
         }
     }
 }
